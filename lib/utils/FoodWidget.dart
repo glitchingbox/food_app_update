@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app_prokit/main.dart';
 import 'package:food_app_prokit/screen/FoodAddAddress.dart';
+import 'package:food_app_prokit/screen/FoodViewRestaurants.dart';
 import 'package:food_app_prokit/services/auth_location_class.dart';
+import 'package:food_app_prokit/utils/FlutterToast.dart';
+import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'FoodColors.dart';
@@ -50,6 +55,9 @@ Widget search(BuildContext context) {
           TextSpan(
             text: food_hint_search_restaurants,
             style: TextStyle(fontSize: 16, color: appStore.textSecondaryColor),
+            onEnter: (event) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => FoodViewRestaurants(),));
+            },
           ),
         ],
       ),
@@ -58,91 +66,6 @@ Widget search(BuildContext context) {
 }
 
 Widget mAddress(BuildContext context) {
-//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-
-  // TextEditingController _controller = TextEditingController();
-
-  //  final loc.Location location = loc.Location();
-  // late GoogleMapController _controller;
-  // bool _added = false;
-  // StreamSubscription<loc.LocationData>? _locationSubscription;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _requestPermission();
-  // }
-
-  // Future<void> _getLocation() async {
-  //   try {
-  //     final loc.LocationData _locationResult = await location.getLocation();
-  //     await FirebaseFirestore.instance.collection('location').doc('user1').set({
-  //       'latitude': _locationResult.latitude,
-  //       'longitude': _locationResult.longitude,
-  //       'name': 'john',
-  //     }, SetOptions(merge: true));
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Location added successfully!')),
-  //     );
-  //   } catch (e) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Error while adding location: $e')),
-  //     );
-  //   }
-  // }
-
-  // Future<void> _listenLocation() async {
-  //   _locationSubscription = location.onLocationChanged.handleError((onError) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Error: $onError')),
-  //     );
-  //     _locationSubscription?.cancel();
-  //     setState(() {
-  //       _locationSubscription = null;
-  //     });
-  //   }).listen((loc.LocationData currentLocation) async {
-  //     await FirebaseFirestore.instance.collection('location').doc('user1').set({
-  //       'latitude': currentLocation.latitude,
-  //       'longitude': currentLocation.longitude,
-  //       'name': 'john',
-  //     }, SetOptions(merge: true));
-  //   });
-  // }
-
-  // _stopListening() {
-  //   _locationSubscription?.cancel();
-  //   setState(() {
-  //     _locationSubscription = null;
-  //   });
-  // }
-
-  // Future<void> _requestPermission() async {
-  //   var status = await Permission.location.request();
-  //   if (status.isGranted) {
-  //     print('Permission granted');
-  //   } else if (status.isDenied) {
-  //     _requestPermission();
-  //   } else if (status.isPermanentlyDenied) {
-  //     openAppSettings();
-  //   }
-  // }
-
-  // Future<void> mymap(AsyncSnapshot<QuerySnapshot> snapshot) async {
-  //   await _controller.animateCamera(CameraUpdate.newCameraPosition(
-  //     CameraPosition(
-  //       target: LatLng(
-  //         snapshot.data!.docs.singleWhere(
-  //             (element) => element.id == widget.user_id)['latitude'],
-  //         snapshot.data!.docs.singleWhere(
-  //             (element) => element.id == widget.user_id)['longitude'],
-  //       ),
-  //       zoom: 14.47,
-  //     ),
-  //   ));
-  // }
-
-//...........................................................
-
   return Container(
     padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
     decoration: BoxDecoration(
@@ -166,7 +89,45 @@ Widget mAddress(BuildContext context) {
 void mChangeAddress(BuildContext context) {
   // String _location = "Fetching location...";
 
+  // final AuthLocationClass _authLocationClass = AuthLocationClass();
+
+  // void _getCurrentLocation() async {
+  //   // Call the method from AuthLocationClass
+
+  //   //........................................
+  //   Position? position = await _authLocationClass.getCurrentLocation();
+  //   if (position != null) {
+  //     print("Latitude: ${position.latitude}, Longitude: ${position.longitude}");
+  //   } else {
+  //     print("Failed to fetch location.");
+
+  //   }
+  // }
+
   final AuthLocationClass _authLocationClass = AuthLocationClass();
+
+  Future<void> _getLocation(latitude, longitude) async {
+    try {
+      // final loc.LocationData _locationResult = await location.getLocation();
+      await FirebaseFirestore.instance.collection('location').doc('user1').set({
+        'latitude': latitude,
+        'longitude': longitude,
+        'name': 'john',
+      }, SetOptions(merge: true));
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Location added successfully!')),
+      // );
+      Message.show(msg: 'Location added successfully!');
+      Navigator.of(context).pop();
+      //TODO: Define what should happed after saving data  @Pradeep
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Error while adding location: $e')),
+      // );
+
+      Message.show(msg: 'Error while adding location: $e');
+    }
+  }
 
   void _getCurrentLocation() async {
     // Call the method from AuthLocationClass
@@ -175,6 +136,7 @@ void mChangeAddress(BuildContext context) {
     Position? position = await _authLocationClass.getCurrentLocation();
     if (position != null) {
       print("Latitude: ${position.latitude}, Longitude: ${position.longitude}");
+      _getLocation(position.latitude, position.longitude);
     } else {
       print("Failed to fetch location.");
     }
@@ -251,17 +213,9 @@ void mChangeAddress(BuildContext context) {
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(top: 16, bottom: 16)),
                 GestureDetector(
-                  onTap: () async {
-                    Position? position = await _authLocationClass.getCurrentLocation();
-                    if (position != null) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("Location: ${position.latitude}, ${position.longitude}"),
-                      ));
-                    }
+                  onTap: () {
+                    FoodAddAddress().launch(context);
                   },
-                  // onTap: () {
-                  //   FoodAddAddress().launch(context);
-                  // },
                   child: RichText(
                     text: TextSpan(
                       children: [
