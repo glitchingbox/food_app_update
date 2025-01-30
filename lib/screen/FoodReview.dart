@@ -5,12 +5,10 @@ import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import 'FoodRestaurantsDescription.dart';
 
 class FoodReview extends StatefulWidget {
   static String tag = '/FoodReview';
-
   @override
   FoodReviewState createState() => FoodReviewState();
 }

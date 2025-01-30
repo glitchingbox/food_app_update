@@ -47,9 +47,9 @@ class _mAddressState extends State<mAddress> {
       await FirebaseFirestore.instance.collection('location').doc(widget.userId).set({
         'latitude': locationResult.latitude,
         'longitude': locationResult.longitude,
-        'name': 'John Doe', // Update dynamically if needed
+        'name': 'John Doe',
+         // Update dynamically if needed
       }, SetOptions(merge: true));
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Location added successfully!')),
       );

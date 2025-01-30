@@ -446,8 +446,12 @@ class FoodSideMenuState extends State<FoodSideMenu> {
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: LinearGradient(
-                    begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [gradientColor1, gradientColor2]),
+                     gradient: LinearGradient(
+                     begin: Alignment.topRight,
+                     end: Alignment.bottomLeft,
+                     colors: [gradientColor1, 
+                     gradientColor2,
+                     ],),
               ),
               child: Padding(
                 padding: EdgeInsets.all(10),

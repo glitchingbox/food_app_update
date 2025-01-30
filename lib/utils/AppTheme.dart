@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class AppThemeData {
-  //
+  
   AppThemeData._();
 
   static final ThemeData lightTheme = ThemeData(

@@ -7,7 +7,6 @@ import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:food_app_prokit/utils/dotted_border.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import '../main.dart';
 import 'FoodAddressConfirmation.dart';
 import 'FoodCoupon.dart';
@@ -15,11 +14,9 @@ import 'FoodPayment.dart';
 
 class FoodBookCart extends StatefulWidget {
   static String tag = '/BookCart';
-
   @override
   FoodBookCartState createState() => FoodBookCartState();
-}
-
+  }
 class FoodBookCartState extends State<FoodBookCart> {
   late List<FoodDish> mList2;
 

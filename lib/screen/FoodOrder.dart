@@ -7,8 +7,6 @@ import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 
-import '../utils/FoodColors.dart';
-
 class FoodOrder extends StatefulWidget {
   static String tag = '/FoodOrder';
 

@@ -3,13 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app_prokit/model/FoodModel.dart';
 import 'package:food_app_prokit/screen/FoodCreateOtp.dart';
-import 'package:food_app_prokit/services/auth_class_helper.dart';
 import 'package:food_app_prokit/utils/FoodColors.dart';
 import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'FoodDashboard.dart';
+
 
 class FoodCreateAccount extends StatefulWidget {
   static String tag = '/FoodCreateAccount';
