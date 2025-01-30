@@ -18,7 +18,6 @@ import 'FoodProfile.dart';
 import 'FoodSignIn.dart';
 import 'FoodViewRestaurants.dart';
 
-
 class FoodDashboard extends StatefulWidget {
   static String tag = '/FoodDashboard';
 
@@ -109,16 +108,17 @@ class FoodDashboardState extends State<FoodDashboard> {
                       padding: EdgeInsets.all(16),
                       child: Column(
                         children: <Widget>[
+                          // mAddress(context, food_lbl_address_dashboard),
                           mAddress(context),
-                          SizedBox(height:16),
+                          SizedBox(height: 16),
                           search(
                             context,
                           ),
-                          SizedBox(height:16),
+                          SizedBox(height: 16),
                           Row(
                             children: <Widget>[
                               Expanded(
-                                child:topGradient(
+                                child: topGradient(
                                   food_color_blue_gradient1,
                                   food_color_blue_gradient2,
                                   food_cloche,
@@ -558,7 +558,6 @@ class FoodSideMenuState extends State<FoodSideMenu> {
 //     food_lbl_logout ?? 'Logout',
 //     FoodSignIn(),
 // )
-
                     ],
                   ),
                 ),
@@ -571,7 +570,10 @@ class FoodSideMenuState extends State<FoodSideMenu> {
                     children: <Widget>[
                       Text(food_lbl_quick_searches, style: primaryTextStyle()),
                       Text(food_lbl_cafe, style: primaryTextStyle(color: food_textColorSecondary)),
-                      Text(food_hint_search_restaurants, style: primaryTextStyle(color: food_textColorSecondary),),
+                      Text(
+                        food_hint_search_restaurants,
+                        style: primaryTextStyle(color: food_textColorSecondary),
+                      ),
                       Text(food_lbl_bars, style: primaryTextStyle(color: food_textColorSecondary)),
                     ],
                   ),

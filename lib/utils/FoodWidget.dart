@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app_prokit/main.dart';
@@ -7,7 +6,7 @@ import 'package:food_app_prokit/screen/FoodAddAddress.dart';
 import 'package:food_app_prokit/screen/FoodViewRestaurants.dart';
 import 'package:food_app_prokit/services/auth_location_class.dart';
 import 'package:food_app_prokit/utils/FlutterToast.dart';
-import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'FoodColors.dart';
@@ -56,13 +55,37 @@ Widget search(BuildContext context) {
             text: food_hint_search_restaurants,
             style: TextStyle(fontSize: 16, color: appStore.textSecondaryColor),
             onEnter: (event) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => FoodViewRestaurants(),));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FoodViewRestaurants(),
+                  ));
             },
           ),
         ],
       ),
     ),
   );
+}
+
+String food_lbl_address_dashboard = "Fetching location...";
+
+Future<void> _getCurrentLocation() async {
+  try {
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
+
+    Placemark place = placemarks[0];
+    food_lbl_address_dashboard = " ${place.locality}, ${place.country}";
+  } catch (e) {
+    food_lbl_address_dashboard = "Unable to get location";
+  }
 }
 
 Widget mAddress(BuildContext context) {
@@ -76,8 +99,10 @@ Widget mAddress(BuildContext context) {
       children: <Widget>[
         Text(food_lbl_address_dashboard, style: primaryTextStyle()),
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             mChangeAddress(context);
+            await _getCurrentLocation();
+            (context as Element).markNeedsBuild();
           },
           child: Text(food_lbl_change, style: primaryTextStyle(color: food_colorPrimary)),
         ),
@@ -87,61 +112,56 @@ Widget mAddress(BuildContext context) {
 }
 
 void mChangeAddress(BuildContext context) {
-  // String _location = "Fetching location...";
-
-  // final AuthLocationClass _authLocationClass = AuthLocationClass();
-
-  // void _getCurrentLocation() async {
-  //   // Call the method from AuthLocationClass
-
-  //   //........................................
-  //   Position? position = await _authLocationClass.getCurrentLocation();
-  //   if (position != null) {
-  //     print("Latitude: ${position.latitude}, Longitude: ${position.longitude}");
-  //   } else {
-  //     print("Failed to fetch location.");
-
-  //   }
-  // }
-
   final AuthLocationClass _authLocationClass = AuthLocationClass();
 
-  Future<void> _getLocation(latitude, longitude) async {
+  // Function to get address from lat/lng (Reverse Geocoding)
+  Future<String?> _getAddressFromLatLng(double lat, double lon) async {
     try {
-      // final loc.LocationData _locationResult = await location.getLocation();
+      List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks[0];
+        return "${place.locality}, ${place.country}"; // Example: "New York, USA"
+      }
+    } catch (e) {
+      print("Error in reverse geocoding: $e");
+    }
+    return null;
+  }
+
+  // Function to store location in Firestore
+  Future<void> _getLocation(double latitude, double longitude, String? locationName) async {
+    try {
       await FirebaseFirestore.instance.collection('location').doc('user1').set({
         'latitude': latitude,
         'longitude': longitude,
-        'name': 'john',
+        'address': locationName ?? 'Unknown Location',
+        'name': food_username,
       }, SetOptions(merge: true));
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text('Location added successfully!')),
-      // );
+
       Message.show(msg: 'Location added successfully!');
       Navigator.of(context).pop();
-      //TODO: Define what should happed after saving data  @Pradeep
     } catch (e) {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text('Error while adding location: $e')),
-      // );
-
       Message.show(msg: 'Error while adding location: $e');
     }
   }
 
+  // Function to get current location
   void _getCurrentLocation() async {
-    // Call the method from AuthLocationClass
-
-    //........................................
     Position? position = await _authLocationClass.getCurrentLocation();
     if (position != null) {
       print("Latitude: ${position.latitude}, Longitude: ${position.longitude}");
-      _getLocation(position.latitude, position.longitude);
+
+      // Get location name
+      String? locationName = await _getAddressFromLatLng(position.latitude, position.longitude);
+
+      // Save to Firestore
+      _getLocation(position.latitude, position.longitude, locationName);
     } else {
       print("Failed to fetch location.");
     }
   }
 
+  // Show Bottom Sheet
   showModalBottomSheet(
     backgroundColor: Colors.transparent,
     context: context,
@@ -151,8 +171,9 @@ void mChangeAddress(BuildContext context) {
         child: IntrinsicHeight(
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                color: food_white),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+              color: food_white,
+            ),
             height: MediaQuery.of(context).size.width * 1.0,
             padding: EdgeInsets.all(24),
             child: Column(
@@ -167,13 +188,15 @@ void mChangeAddress(BuildContext context) {
                         finish(context);
                       },
                       icon: Icon(Icons.close, color: food_textColorSecondary),
-                    )
+                    ),
                   ],
                 ),
                 SizedBox(height: 4),
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10), boxShadow: defaultBoxShadow(spreadRadius: 3.0)),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: defaultBoxShadow(spreadRadius: 3.0),
+                  ),
                   child: TextField(
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
@@ -193,25 +216,24 @@ void mChangeAddress(BuildContext context) {
                     children: [
                       WidgetSpan(
                         child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Icon(Icons.my_location, color: food_colorPrimary, size: 18)),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Icon(Icons.my_location, color: food_colorPrimary, size: 18),
+                        ),
                       ),
-
-                      // location current
                       TextSpan(
-                          text: food_lbl_use_current_location,
-                          recognizer: TapGestureRecognizer()..onTap = _getCurrentLocation,
-                          style: TextStyle(fontSize: 16, color: food_colorPrimary)),
-
-                      //end
+                        text: food_lbl_use_current_location,
+                        recognizer: TapGestureRecognizer()..onTap = _getCurrentLocation,
+                        style: TextStyle(fontSize: 16, color: food_colorPrimary),
+                      ),
                     ],
                   ),
                 ),
                 Container(
-                    height: 0.5,
-                    color: food_view_color,
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.only(top: 16, bottom: 16)),
+                  height: 0.5,
+                  color: food_view_color,
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(top: 16, bottom: 16),
+                ),
                 GestureDetector(
                   onTap: () {
                     FoodAddAddress().launch(context);
@@ -221,21 +243,26 @@ void mChangeAddress(BuildContext context) {
                       children: [
                         WidgetSpan(
                           child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Icon(Icons.add, color: food_colorPrimary, size: 18)),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Icon(Icons.add, color: food_colorPrimary, size: 18),
+                          ),
                         ),
-                        TextSpan(text: food_lbl_add_address, style: TextStyle(fontSize: 16, color: food_colorPrimary)),
+                        TextSpan(
+                          text: food_lbl_add_address,
+                          style: TextStyle(fontSize: 16, color: food_colorPrimary),
+                        ),
                       ],
                     ),
                   ),
                 ),
                 Container(
-                    height: 0.5,
-                    color: food_view_color,
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.only(top: 16, bottom: 16)),
+                  height: 0.5,
+                  color: food_view_color,
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(top: 16, bottom: 16),
+                ),
                 Text(food_lbl_recent_location, style: primaryTextStyle()),
-                Text(food_lbl_location, style: primaryTextStyle(color: food_textColorSecondary))
+                Text(food_lbl_location, style: primaryTextStyle(color: food_textColorSecondary)),
               ],
             ),
           ),
@@ -244,6 +271,8 @@ void mChangeAddress(BuildContext context) {
     },
   );
 }
+
+//;;;;;;;;;;;;;;;
 
 Widget mViewAll(BuildContext context, var value, {required Function onTap}) {
   return GestureDetector(

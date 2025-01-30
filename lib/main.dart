@@ -14,7 +14,6 @@ import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
-
 Future _fireBackgroundMessaging(RemoteMessage message) async {
   if (message.notification != null) {
     print('A Notification found in background ..!');

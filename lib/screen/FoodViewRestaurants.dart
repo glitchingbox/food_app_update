@@ -7,7 +7,6 @@ import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import '../main.dart';
 import 'FoodBookDetail.dart';
 import 'FoodRestaurantsDescription.dart';

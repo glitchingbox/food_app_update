@@ -63,7 +63,7 @@ class FoodBookCartState extends State<FoodBookCart> {
                             ),
                           ],
                         ),
-                        Text(food_lbl_address_dashboard, style: primaryTextStyle()),
+                        // Text(food_lbl_address_dashboard, style: primaryTextStyle()),
                         Text(food_lbl_delivery_time_36_min, style: primaryTextStyle(size: 14, color: food_textColorSecondary)),
                       ],
                     ),
