@@ -6,8 +6,8 @@ import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:food_app_prokit/utils/FoodImages.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
+import 'package:food_app_prokit/utils/order_online.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import '../../../main.dart';
 import 'FoodBookDetail.dart';
 import 'FoodDescription.dart';
@@ -20,6 +20,7 @@ class FoodRestaurantsDescription extends StatefulWidget {
   @override
   FoodRestaurantsDescriptionState createState() => FoodRestaurantsDescriptionState();
 }
+
 
 class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> {
   List<DataFilter> list = getAllData();
@@ -329,13 +330,10 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                             flex: 1,
                             child: GestureDetector(
                               onTap: () {
+                                 
                                 FoodDescription().launch(context);
                               },
-                              child: Container(
-                                padding: EdgeInsets.only(top: 8, bottom: 8),
-                                decoration: BoxDecoration(color: food_colorPrimary, borderRadius: BorderRadius.circular(50)),
-                                child: Text(food_lbl_order_online, style: primaryTextStyle(color: white)).center(),
-                              ),
+                              child: OrderOnline(),
                             ),
                           ),
                           SizedBox(width: 16),
@@ -502,6 +500,8 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
     );
   }
 }
+
+
 
 // ignore: must_be_immutable
 class Review extends StatelessWidget {

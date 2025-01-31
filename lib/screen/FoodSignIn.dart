@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app_prokit/main.dart';
 import 'package:food_app_prokit/screen/FoodDashboard.dart';
+import 'package:food_app_prokit/utils/FlutterToast.dart';
 import 'package:food_app_prokit/utils/FoodColors.dart';
 import 'package:food_app_prokit/utils/FoodImages.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
@@ -34,9 +35,9 @@ class FoodSignInState extends State<FoodSignIn> {
     );
 
     await FirebaseAuth.instance.signInWithCredential(credential);
-    print('Google sign-in successful');
+   Message.show(msg: 'Google sign-in successful');
   } catch (e) {
-    print('Google sign-in failed: $e');
+    Message.show(msg: 'Google sign-in failed: $e');
   }
 }
 
@@ -48,7 +49,7 @@ class FoodSignInState extends State<FoodSignIn> {
         onTap: () {
           
           FoodDashboard().launch(context);
-          log();
+          // log();
         },
         child: Container(
           width: width,

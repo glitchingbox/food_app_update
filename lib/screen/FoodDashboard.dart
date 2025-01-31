@@ -558,13 +558,7 @@ class FoodSideMenuState extends State<FoodSideMenu> {
                         FoodSignIn(),
                       ),
 
-//                                           mOption(
-//     food_color_yellow_gradient1 ?? Colors.yellow,
-//     food_color_yellow_gradient2 ?? Colors.yellowAccent,
-//     Icons.settings_power,
-//     food_lbl_logout ?? 'Logout',
-//     FoodSignIn(),
-// )
+
                     ],
                   ),
                 ),
