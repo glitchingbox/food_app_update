@@ -115,6 +115,8 @@ class FoodDashboardState extends State<FoodDashboard> {
                             context,
                           ),
                           SizedBox(height: 16),
+
+                          //........................Food Order...............
                           Row(
                             children: <Widget>[
                               Expanded(
@@ -124,6 +126,7 @@ class FoodDashboardState extends State<FoodDashboard> {
                                   food_cloche,
                                   food_lbl_food_order,
                                   food_lbl_find_near_by_restaurants,
+
                                 ),
                                 flex: 1,
                               ),

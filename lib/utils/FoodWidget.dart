@@ -6,6 +6,7 @@ import 'package:food_app_prokit/screen/FoodAddAddress.dart';
 import 'package:food_app_prokit/screen/FoodViewRestaurants.dart';
 import 'package:food_app_prokit/services/auth_location_class.dart';
 import 'package:food_app_prokit/utils/FlutterToast.dart';
+import 'package:food_app_prokit/utils/search_restaurent.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -68,7 +69,7 @@ Widget search(BuildContext context) {
   );
 }
 
-String food_lbl_address_dashboard = "Fetching location...";
+String food_lbl_address_dashboard = "Add your location...";
 
 Future<void> _getCurrentLocation() async {
   try {
@@ -84,7 +85,7 @@ Future<void> _getCurrentLocation() async {
     Placemark place = placemarks[0];
     food_lbl_address_dashboard = " ${place.locality}, ${place.country}";
   } catch (e) {
-    food_lbl_address_dashboard = "Unable to get location";
+    food_lbl_address_dashboard = "Locations";
   }
 }
 
@@ -129,13 +130,15 @@ void mChangeAddress(BuildContext context) {
   }
 
   // Function to store location in Firestore
-  Future<void> _getLocation(double latitude, double longitude, String? locationName) async {
+  Future<void> _getLocation(double latitude, double longitude, String? locationName, String ? search_Restaurents) async {
     try {
       await FirebaseFirestore.instance.collection('location').doc('user1').set({
         'latitude': latitude,
         'longitude': longitude,
         'address': locationName ?? 'Unknown Location',
         'name': food_username,
+        'search' : search_Restaurents,
+        
       }, SetOptions(merge: true));
 
       Message.show(msg: 'Location added successfully!');
@@ -155,11 +158,14 @@ void mChangeAddress(BuildContext context) {
       String? locationName = await _getAddressFromLatLng(position.latitude, position.longitude);
 
       // Save to Firestore
-      _getLocation(position.latitude, position.longitude, locationName);
+      _getLocation(position.latitude, position.longitude, locationName, food_hint_search_restaurants);
     } else {
       print("Failed to fetch location.");
     }
   }
+
+
+
 
   // Show Bottom Sheet
   showModalBottomSheet(
@@ -192,24 +198,7 @@ void mChangeAddress(BuildContext context) {
                   ],
                 ),
                 SizedBox(height: 4),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: defaultBoxShadow(spreadRadius: 3.0),
-                  ),
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: food_white,
-                      hintText: food_hint_search_restaurants,
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.search),
-                      contentPadding: EdgeInsets.only(left: 26.0, bottom: 8.0, top: 8.0, right: 50.0),
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                ),
+                SearchRestaurent(),
                 SizedBox(height: 16),
                 RichText(
                   text: TextSpan(
@@ -271,6 +260,8 @@ void mChangeAddress(BuildContext context) {
     },
   );
 }
+
+
 
 //;;;;;;;;;;;;;;;
 

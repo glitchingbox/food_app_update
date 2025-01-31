@@ -258,7 +258,7 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(food_lbl_lunch_in_delhi_ncr, style: boldTextStyle(size: 20)),
+                          Text(food_lbl_lunch_in_delhi_ncr , style: boldTextStyle(size: 20)),
                           SizedBox(height: 4),
                           mAddress(context),
                           SizedBox(height: 16),
