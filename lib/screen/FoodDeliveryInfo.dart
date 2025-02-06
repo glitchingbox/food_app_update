@@ -24,15 +24,16 @@ class FoodDeliveryInfoState extends State<FoodDeliveryInfo> {
       backgroundColor: food_view_color,
       body: SafeArea(
         child: Stack(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.center,
           children: <Widget>[
             MapSample(),
             Align(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.center,
               child: Container(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.center,
                 height: 400,
-                decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: appStore.isDarkModeOn ? scaffoldDarkColor : white),
+                decoration: BoxDecoration(
+                    boxShadow: defaultBoxShadow(), color: appStore.isDarkModeOn ? scaffoldDarkColor : white),
                 margin: EdgeInsets.all(16),
                 child: Column(
                   children: <Widget>[
@@ -40,7 +41,10 @@ class FoodDeliveryInfoState extends State<FoodDeliveryInfo> {
                       transform: Matrix4.translationValues(0.0, -24.0, 0.0),
                       child: Stack(
                         children: <Widget>[
-                          Image.asset(food_ic_fab_back, width: width * 0.15, height: width * 0.15, color: appStore.isDarkModeOn ? cardDarkColor : white),
+                          Image.asset(food_ic_fab_back,
+                              width: width * 0.15,
+                              height: width * 0.15,
+                              color: appStore.isDarkModeOn ? cardDarkColor : white),
                           Padding(
                             padding: EdgeInsets.all(10),
                             child: SvgPicture.asset(
@@ -108,7 +112,11 @@ class MapSampleState extends State<MapSample> {
     zoom: 14.4746,
   );
 
-  static final CameraPosition _kLake = CameraPosition(bearing: 192.8334901395799, target: LatLng(37.43296265331129, -122.08832357078792), tilt: 59.440717697143555, zoom: 19.151926040649414);
+  static final CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +128,33 @@ class MapSampleState extends State<MapSample> {
           _controller.complete(controller);
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: Text('Restaurant'),
-        icon: Icon(Icons.restaurant),
+     floatingActionButton: Container(
+      width: 250,
+  decoration: BoxDecoration(
+    gradient: LinearGradient(
+      colors: [const Color.fromARGB(158, 228, 87, 90),food_colorPrimary, ], // Change colors as needed
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    borderRadius: BorderRadius.circular(30), // Adjust shape if needed
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black26,
+        blurRadius: 5,
+        spreadRadius: 2,
       ),
+    ],
+  ),
+  child: FloatingActionButton.extended(
+    
+    onPressed: _goToTheLake,
+    backgroundColor: Colors.transparent,
+    elevation: 0, 
+    label: Text('Restaurant', style: TextStyle(color: Colors.white)),
+    icon: Icon(Icons.restaurant, color: Colors.white),
+  ),
+),
+floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 

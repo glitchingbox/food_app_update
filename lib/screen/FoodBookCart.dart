@@ -68,7 +68,10 @@ class FoodBookCartState extends State<FoodBookCart> {
                 ],
               ),
             ),
-            bottomBillDetail(context, food_color_blue_gradient1, food_color_blue_gradient2, food_lbl_make_payment, onTap: () {
+            bottomBillDetail(
+              context,      food_colorPrimary,
+                                  const Color.fromARGB(158, 228, 87, 90),
+                                   food_lbl_make_payment, onTap: () {
               FoodPayment().launch(context);
             })
           ],
@@ -116,7 +119,7 @@ class FoodBookCartState extends State<FoodBookCart> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(food_lbl_coupon_discount, style: primaryTextStyle()),
-                        Text(food_lbl_70, style: primaryTextStyle(color: food_colorAccent)),
+                        Text(food_lbl_70, style: primaryTextStyle(color: appStore.isDarkModeOn ? Color.fromARGB(255, 233, 140, 1) : Color.fromARGB(255, 233, 140, 1))),
                       ],
                     ),
                     SizedBox(
@@ -133,7 +136,7 @@ class FoodBookCartState extends State<FoodBookCart> {
                       height: 10,
                     ),
                     DottedBorder(
-                      color: food_colorAccent,
+                      color: appStore.isDarkModeOn? Color.fromARGB(255, 233, 140, 1) :      food_colorPrimary,
                       strokeWidth: 1,
                       padding: EdgeInsets.all(16),
                       radius: Radius.circular(16),

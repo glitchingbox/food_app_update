@@ -69,31 +69,49 @@ class FoodWalkThroughState extends State<FoodWalkThrough> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(titles[currentIndexPage], style: boldTextStyle(size: 20, color: appStore.isDarkModeOn ? white : food_textColorPrimary)),
-                    SizedBox(height: 10),
+                    Text(titles[currentIndexPage],
+                        style: boldTextStyle(size: 20, color: appStore.isDarkModeOn ? white : const Color.fromARGB(255, 255, 255, 255),weight: FontWeight.bold)),
+                    SizedBox(height: 15),
                     Center(
-                      child: Text(subTitles[currentIndexPage], style: secondaryTextStyle(size: 16, color: food_textColorSecondary), textAlign: TextAlign.center),
+                      child: Text(subTitles[currentIndexPage],
+                          style: secondaryTextStyle(size: 14, color: const Color.fromARGB(172, 255, 255, 255),weight: FontWeight.w700,fontStyle: FontStyle.italic,),
+                          textAlign: TextAlign.center),
                     ),
                     SizedBox(height: 50),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         GestureDetector(
-                          child: Text(food_lbl_skip, style: secondaryTextStyle(size: 16)),
+                          child: Text(
+                            food_lbl_skip,
+                            style: secondaryTextStyle(
+                              size: 16,
+                              color: Colors.white,
+                              weight: FontWeight.bold,
+                            ),
+                          ),
                           onTap: () {
                             FoodSignIn().launch(context);
                           },
                         ),
-                        DotsIndicator(dotsCount: 3, position: currentIndexPage, decorator: DotsDecorator(color: food_view_color, activeColor: food_colorPrimary)),
+                        DotsIndicator(
+                            dotsCount: 3,
+                            position: currentIndexPage,
+                            decorator: DotsDecorator(
+                                color: food_view_color, activeColor: const Color.fromARGB(255, 58, 1, 23))),
                         InkWell(
-                          child: Padding(child: Text(food_lbl_next, style: primaryTextStyle(color: food_colorPrimary)), padding: EdgeInsets.all(8)),
+                          child: Padding(
+                              child: Text(food_lbl_next,
+                                  style: primaryTextStyle(color: Colors.white, weight: FontWeight.bold)),
+                              padding: EdgeInsets.all(8)),
                           onTap: () {
                             currentIndexPage = currentIndexPage + 1;
                             if (currentIndexPage >= 3) {
                               currentIndexPage = 0;
                               FoodSignIn().launch(context);
                             } else {
-                              pageController.animateToPage(currentIndexPage, duration: Duration(milliseconds: 500), curve: Curves.ease);
+                              pageController.animateToPage(currentIndexPage,
+                                  duration: Duration(milliseconds: 500), curve: Curves.ease);
                               setState(() {});
                             }
                           },
@@ -128,7 +146,10 @@ class WalkThrough extends StatelessWidget {
               arcType: ArcType.CONVEX,
               edge: Edge.BOTTOM,
               height: (MediaQuery.of(context).size.width) / 20,
-              child: Container(height: (MediaQuery.of(context).size.height) / 1.7, width: MediaQuery.of(context).size.width, color: appStore.isDarkModeOn ? black : food_colorPrimary_light),
+              child: Container(
+                  height: (MediaQuery.of(context).size.height) / 1.7,
+                  width: MediaQuery.of(context).size.width,
+                  color: appStore.isDarkModeOn ? black : food_colorPrimary_light),
             ),
             SafeArea(
               child: Container(

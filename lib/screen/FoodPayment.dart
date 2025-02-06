@@ -7,7 +7,6 @@ import 'package:food_app_prokit/utils/FoodImages.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import 'FoodDeliveryInfo.dart';
 
 class FoodPayment extends StatefulWidget {
@@ -24,7 +23,8 @@ class FoodPaymentState extends State<FoodPayment> {
 
     Widget mPaymentOption(var icon, var heading, var value, var valueColor) {
       return Container(
-        decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: appStore.isDarkModeOn ? scaffoldDarkColor : white),
+        decoration:
+            BoxDecoration(boxShadow: defaultBoxShadow(), color: appStore.isDarkModeOn ? scaffoldDarkColor : white),
         padding: EdgeInsets.all(4),
         child: Column(
           children: <Widget>[
@@ -44,7 +44,8 @@ class FoodPaymentState extends State<FoodPayment> {
           Stack(
             alignment: Alignment.center,
             children: <Widget>[
-              Image.asset(food_ic_fab_back, width: width * 0.17, color: appStore.isDarkModeOn ? scaffoldDarkColor : white),
+              Image.asset(food_ic_fab_back,
+                  width: width * 0.17, color: appStore.isDarkModeOn ? scaffoldDarkColor : white),
               Container(
                 child: CachedNetworkImage(
                   placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
@@ -63,7 +64,8 @@ class FoodPaymentState extends State<FoodPayment> {
 
     return Scaffold(
       // backgroundColor: food_app_background,
-      bottomNavigationBar: bottomBillDetail(context, food_color_blue_gradient1, food_color_blue_gradient2, food_delivery_info, onTap: () {
+      bottomNavigationBar: bottomBillDetail(
+          context, food_colorPrimary, const Color.fromARGB(158, 228, 87, 90), food_delivery_info, onTap: () {
         FoodDeliveryInfo().launch(context);
       }),
       body: SafeArea(
@@ -87,7 +89,10 @@ class FoodPaymentState extends State<FoodPayment> {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: context.cardColor),
+                      decoration: BoxDecoration(
+                        boxShadow: defaultBoxShadow(),
+                        color: const Color.fromARGB(92, 252, 186, 101),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -95,25 +100,34 @@ class FoodPaymentState extends State<FoodPayment> {
                           SizedBox(height: 8),
                           Row(
                             children: <Widget>[
-                              Expanded(flex: 1, child: mPaymentOption(food_google_wallet, food_lbl_google_wallet, food_lbl_1799, food_color_red)),
+                              Expanded(
+                                  flex: 1,
+                                  child: mPaymentOption(
+                                      food_google_wallet, food_lbl_google_wallet, food_lbl_1799, food_color_red)),
                               SizedBox(width: 16),
-                              Expanded(flex: 1, child: mPaymentOption(food_whatsapp, food_lbl_whatsapp_payment, food_lbl_connect, food_textColorPrimary)),
+                              Expanded(
+                                  flex: 1,
+                                  child: mPaymentOption(food_whatsapp, food_lbl_whatsapp_payment, food_lbl_connect,
+                                      food_textColorPrimary)),
                             ],
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 0),
                         ],
                       ),
                     ),
                     Container(
                       width: width,
                       padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: context.cardColor),
-                      margin: EdgeInsets.only(top: 16, bottom: 16),
+                      decoration: BoxDecoration(
+                        boxShadow: defaultBoxShadow(),
+                        color: const Color.fromARGB(92, 252, 186, 101),
+                      ),
+                      margin: EdgeInsets.only(top: 1, bottom: 1),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(food_lbl_credit_cards.toUpperCase(), style: primaryTextStyle()),
-                          SizedBox(height: 16),
+                          Text(food_lbl_credit_cards, style: primaryTextStyle(color: Colors.black,weight: FontWeight.bold)),
+                          SizedBox(height: 10),
                           RichText(
                             text: TextSpan(
                               children: [
@@ -121,10 +135,16 @@ class FoodPaymentState extends State<FoodPayment> {
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 10),
                                     child: CachedNetworkImage(
-                                        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: food_ic_hdfc, height: width * 0.05, width: width * 0.05),
+                                        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+                                        imageUrl: food_ic_hdfc,
+                                        height: width * 0.05,
+                                        width: width * 0.05),
                                   ),
                                 ),
-                                TextSpan(text: food_lbl__42xx_4523_xxxx_55xx, style: primaryTextStyle(size: 16, color: appStore.isDarkModeOn ? white : food_textColorPrimary)),
+                                TextSpan(
+                                    text: food_lbl__42xx_4523_xxxx_55xx,
+                                    style: primaryTextStyle(
+                                        size: 16, color: appStore.isDarkModeOn ? white : food_textColorPrimary)),
                               ],
                             ),
                           ),
@@ -133,7 +153,10 @@ class FoodPaymentState extends State<FoodPayment> {
                     ),
                     Container(
                       padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: context.cardColor),
+                      decoration: BoxDecoration(
+                        boxShadow: defaultBoxShadow(),
+                        color: const Color.fromARGB(92, 252, 186, 101),
+                      ),
                       margin: EdgeInsets.only(bottom: 16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +164,7 @@ class FoodPaymentState extends State<FoodPayment> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text(food_lbl_netbanking.toUpperCase(), style: primaryTextStyle()),
+                              Text(food_lbl_netbanking, style: primaryTextStyle(color: Colors.black,weight: FontWeight.bold)),
                               mViewAll(context, food_lbl_view_all_banks, onTap: () {
                                 //
                               }),

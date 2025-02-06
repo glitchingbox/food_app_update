@@ -16,7 +16,7 @@ import 'FoodString.dart';
 Widget heading(String value) {
   return Container(
     margin: EdgeInsets.all(16),
-    child: Text(value.toString().toUpperCase(), style: primaryTextStyle()),
+    child: Text(value.toString(), style: primaryTextStyle(color: Colors.black, weight: FontWeight.bold)),
   );
 }
 
@@ -42,7 +42,18 @@ Widget search(BuildContext context) {
     width: MediaQuery.of(context).size.width,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
-        border: Border.all(color: food_colorPrimary),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(149, 157, 165, 0.2),
+            blurRadius: 24,
+            spreadRadius: 0,
+            offset: Offset(
+              0,
+              8,
+            ),
+          ),
+        ],
+        // border: Border.all(color: food_colorPrimary),
         color: context.scaffoldBackgroundColor),
     padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
     child: RichText(
@@ -54,7 +65,7 @@ Widget search(BuildContext context) {
                   child: Icon(Icons.search, color: appStore.textSecondaryColor, size: 18))),
           TextSpan(
             text: food_hint_search_restaurants,
-            style: TextStyle(fontSize: 16, color: appStore.textSecondaryColor),
+            style: TextStyle( color: appStore.isDarkModeOn ?  Colors.white: Colors.black38,  fontSize: 16, fontWeight: FontWeight.w500),
             onEnter: (event) {
               Navigator.push(
                   context,
@@ -91,10 +102,21 @@ Future<void> _getCurrentLocation() async {
 
 Widget mAddress(BuildContext context) {
   return Container(
-    padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
+    padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
-        color: appStore.isDarkModeOn ? cardDarkColor : food_colorPrimary_light),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(149, 157, 165, 0.2),
+            blurRadius: 24,
+            spreadRadius: 0,
+            offset: Offset(
+              0,
+              8,
+            ),
+          ),
+        ],
+        color: appStore.isDarkModeOn ? const Color.fromARGB(255, 0, 0, 0) : const Color.fromARGB(255, 255, 255, 255)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -105,7 +127,8 @@ Widget mAddress(BuildContext context) {
             await _getCurrentLocation();
             (context as Element).markNeedsBuild();
           },
-          child: Text(food_lbl_change, style: primaryTextStyle(color: food_colorPrimary)),
+          child: Text(food_lbl_change,
+              style: primaryTextStyle(color: appStore.isDarkModeOn ?  Colors.white: food_colorPrimary, size: 14, weight: FontWeight.bold)),
         ),
       ],
     ),
@@ -130,15 +153,14 @@ void mChangeAddress(BuildContext context) {
   }
 
   // Function to store location in Firestore
-  Future<void> _getLocation(double latitude, double longitude, String? locationName, String ? search_Restaurents) async {
+  Future<void> _getLocation(double latitude, double longitude, String? locationName, String? search_Restaurents) async {
     try {
       await FirebaseFirestore.instance.collection('location').doc('user1').set({
         'latitude': latitude,
         'longitude': longitude,
         'address': locationName ?? 'Unknown Location',
         'name': food_username,
-        'search' : search_Restaurents,
-        
+        'search': search_Restaurents,
       }, SetOptions(merge: true));
 
       Message.show(msg: 'Location added successfully!');
@@ -163,9 +185,6 @@ void mChangeAddress(BuildContext context) {
       print("Failed to fetch location.");
     }
   }
-
-
-
 
   // Show Bottom Sheet
   showModalBottomSheet(
@@ -261,8 +280,6 @@ void mChangeAddress(BuildContext context) {
   );
 }
 
-
-
 //;;;;;;;;;;;;;;;
 
 Widget mViewAll(BuildContext context, var value, {required Function onTap}) {
@@ -280,7 +297,7 @@ Widget mViewAll(BuildContext context, var value, {required Function onTap}) {
                   padding: const EdgeInsets.only(right: 4),
                   child: Icon(Icons.arrow_forward, color: food_colorPrimary, size: 18)),
             ),
-            TextSpan(text: value, style: primaryTextStyle(size: 16, color: food_colorPrimary)),
+            TextSpan(text: value, style: primaryTextStyle(size: 16, color: food_colorPrimary, weight: FontWeight.bold)),
           ],
         ),
       ),
@@ -420,13 +437,13 @@ class QuantitybtnState extends State<Quantitybtn> {
 Widget totalRatting(var value) {
   return Row(
     children: <Widget>[
-      Icon(Icons.radio_button_checked, color: food_colorAccent, size: 16),
-      Icon(Icons.radio_button_checked, color: food_colorAccent, size: 16),
-      Icon(Icons.radio_button_checked, color: food_colorAccent, size: 16),
-      Icon(Icons.radio_button_unchecked, color: food_colorAccent, size: 16),
-      Icon(Icons.radio_button_unchecked, color: food_colorAccent, size: 16),
+      Icon(Icons.radio_button_checked, color: food_colorPrimary, size: 16),
+      Icon(Icons.radio_button_checked, color: food_colorPrimary, size: 16),
+      Icon(Icons.radio_button_checked, color: food_colorPrimary, size: 16),
+      Icon(Icons.radio_button_unchecked, color: food_colorPrimary, size: 16),
+      Icon(Icons.radio_button_unchecked, color: food_colorPrimary, size: 16),
       SizedBox(width: 4),
-      Text(value, style: primaryTextStyle(color: food_textColorSecondary, size: 14))
+      Text(value, style: primaryTextStyle(color: const Color.fromARGB(255, 0, 0, 0), size: 15, weight: FontWeight.bold))
     ],
   );
 }
@@ -435,7 +452,7 @@ Widget bottomBillDetail(BuildContext context, var gColor1, var gColor2, var valu
   return Container(
     height: 100,
     decoration:
-        BoxDecoration(boxShadow: defaultBoxShadow(), border: Border.all(color: white), color: context.cardColor),
+        BoxDecoration(boxShadow: defaultBoxShadow(), border: Border.all(color: white), color:food_colorPrimaryDark),
     padding: EdgeInsets.all(16),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

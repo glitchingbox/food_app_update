@@ -8,7 +8,6 @@ import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-
 class FoodBookDetail extends StatefulWidget {
   static String tag = '/FoodBookDetail';
 
@@ -25,7 +24,7 @@ class FoodBookDetailState extends State<FoodBookDetail> {
   List<String> mPeopleList = ["1", "2", "3", "4", "5+"];
   List<String> mFoodList = ["Veg", "Non Veg"];
   List<String> mTimeList = ["07:00", "07:30", "08:00", "08:30", "09:00", "09:15", "09:30", "10:00", "10:30", "11:00"];
-  
+
   String formattedDate = DateFormat('dd MMM').format(DateTime.now());
 
   final FirestoreServiceBookTable _firestoreService = FirestoreServiceBookTable();
@@ -44,7 +43,7 @@ class FoodBookDetailState extends State<FoodBookDetail> {
 
       await _firestoreService.addReservation(peopleCount, formattedDate, time, foodPreference);
 
-      print("Reservation booked successfully!");
+      // print("Reservation booked successfully!");
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Reservation booked successfully!")),
@@ -149,7 +148,7 @@ class FoodBookDetailState extends State<FoodBookDetail> {
                           );
                         },
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 20),
                       Text(food_lbl_any_food_preference, style: boldTextStyle()),
                       SizedBox(height: 4),
                       buildOptionSelector(mFoodList, mFood, (index) => mFood = index),
@@ -160,12 +159,23 @@ class FoodBookDetailState extends State<FoodBookDetail> {
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
-                            color: isBooking ? Colors.grey : food_colorPrimary,
+                            gradient: LinearGradient(
+                              colors: [
+                                const Color.fromARGB(158, 228, 87, 90),
+                                food_colorPrimary,
+                              ], // Change colors as needed
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            // color: isBooking ? Colors.grey : food_colorPrimary,
                             borderRadius: BorderRadius.circular(50),
                             boxShadow: defaultBoxShadow(),
                           ),
                           child: Center(
-                            child: Text(food_lbl_book_table, style: primaryTextStyle(color: white)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(food_lbl_book_table, style: primaryTextStyle(color: white)),
+                            ),
                           ),
                         ),
                       ),

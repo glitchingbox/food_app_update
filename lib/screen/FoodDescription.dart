@@ -71,11 +71,20 @@ class FoodDescriptionState extends State<FoodDescription> {
                 pinned: true,
                 titleSpacing: 0,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: innerBoxIsScrolled ? appStore.isDarkModeOn ? white : blackColor : white),
+                    icon: Icon(Icons.arrow_back,
+                        color: innerBoxIsScrolled
+                            ? appStore.isDarkModeOn
+                                ? white
+                                : blackColor
+                            : white),
                     onPressed: () {
                       finish(context);
                     }),
-                backgroundColor: innerBoxIsScrolled ? appStore.isDarkModeOn ? blackColor : food_white : blackColor,
+                backgroundColor: innerBoxIsScrolled
+                    ? appStore.isDarkModeOn
+                        ? blackColor
+                        : food_white
+                    : blackColor,
                 actionsIconTheme: IconThemeData(opacity: 0.0),
                 title: Container(
                   height: 60,
@@ -88,7 +97,12 @@ class FoodDescriptionState extends State<FoodDescription> {
                           children: <Widget>[],
                         ),
                         IconButton(
-                          icon: Icon(Icons.search, color: innerBoxIsScrolled ? appStore.isDarkModeOn ? white : blackColor : white),
+                          icon: Icon(Icons.search,
+                              color: innerBoxIsScrolled
+                                  ? appStore.isDarkModeOn
+                                      ? white
+                                      : blackColor
+                                  : white),
                           onPressed: () {},
                         ),
                       ],
@@ -119,52 +133,64 @@ class FoodDescriptionState extends State<FoodDescription> {
                     Container(
                       width: width,
                       padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: context.cardColor),
+                      decoration: BoxDecoration(boxShadow: defaultBoxShadow(),color: const Color.fromARGB(92, 252, 186, 101),),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(food_lbl_burger, style: primaryTextStyle(size: 18)),
+                          Text(food_lbl_burger, style: primaryTextStyle(size: 18,weight: FontWeight.bold)),
+                          SizedBox(
+                            height: 15,
+                          ),
                           totalRatting(food_lbl_order_rating),
                           SizedBox(height: 8),
                           Row(
                             children: <Widget>[
                               Container(
-                                decoration: gradientBoxDecoration(gradientColor1: food_color_blue_gradient1, gradientColor2: food_color_blue_gradient2),
+                                decoration: gradientBoxDecoration(
+                                    gradientColor1: food_colorPrimary,
+                              gradientColor2: const Color.fromARGB(255, 126, 3, 50)),
                                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                                 margin: EdgeInsets.only(right: 10),
                                 child: Text(food_lbl_offer, style: primaryTextStyle(size: 14, color: white)),
                               ),
-                              Text(food_lbl_save_14_on_each_night, style: primaryTextStyle(color: food_textColorSecondary))
+                              Text(food_lbl_save_14_on_each_night,
+                                  style: primaryTextStyle(color: appStore.isDarkModeOn? Colors.white : food_textColorSecondary,size: 15, ), )
                             ],
                           ),
-                          SizedBox(height: 8),
-                          Divider(height: 0.5, color: food_view_color),
+                          SizedBox(height: 12),
+                          Divider(height: 0.5, color: Color.fromARGB(255, 233, 140, 1),),
                           SizedBox(height: 8),
                           Row(
                             children: <Widget>[
                               Expanded(child: mVegOption(food_lbl_veg_only, food_view_color), flex: 1),
-                              Expanded(child: mVegOption(food_lbl_non_veg_only, food_color_red), flex: 2),
+                              Expanded(child: mVegOption(food_lbl_non_veg_only, food_colorPrimary), flex: 2),
                             ],
                           )
                         ],
                       ),
                     ),
+                     Padding(
+                       padding: const EdgeInsets.only(left: 20,right: 20),
+                       child: Divider(height: 0.5, color: Color.fromARGB(255, 233, 140, 1),),
+                     ),
                     GestureDetector(
                       onTap: () {},
                       child: Container(
-                        margin: EdgeInsets.only(top: 16),
+                        
+                        margin: EdgeInsets.only(top: 0),
                         padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: context.cardColor),
+                        decoration: BoxDecoration(boxShadow: defaultBoxShadow(),     color: const Color.fromARGB(92, 252, 186, 101),),
                         child: Row(
                           children: <Widget>[
-                            SvgPicture.asset(food_ic_comass, color: food_colorPrimary, width: width * 0.08, height: width * 0.08),
+                            SvgPicture.asset(food_ic_comass,
+                                color: food_colorPrimary, width: width * 0.08, height: width * 0.08),
                             SizedBox(width: 10),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(food_lbl_delivery_by_yumfood_with_online_tracking, style: boldTextStyle()),
-                                  Text(food_lbl_est_food_delivery_time, style: primaryTextStyle()),
+                                  Text(food_lbl_delivery_by_yumfood_with_online_tracking, style: boldTextStyle(color: appStore.isDarkModeOn? Colors.white : Colors.black, size: 15,weight: FontWeight.bold)),
+                                  Text(food_lbl_est_food_delivery_time, style: primaryTextStyle(color: appStore.isDarkModeOn? Colors.white : Colors.black,size: 15,weight: FontWeight.w400)),
                                 ],
                               ),
                             )
@@ -172,9 +198,9 @@ class FoodDescriptionState extends State<FoodDescription> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 0),
                     Container(
-                      decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: context.cardColor),
+                      decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: const Color.fromARGB(92, 252, 186, 101), ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -186,7 +212,8 @@ class FoodDescriptionState extends State<FoodDescription> {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.vertical,
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 16, childAspectRatio: 0.72, mainAxisSpacing: 16),
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, crossAxisSpacing: 16, childAspectRatio: 0.72, mainAxisSpacing: 16),
                               itemCount: mList1.length,
                               padding: EdgeInsets.only(bottom: 16),
                               itemBuilder: (context, index) {
@@ -241,13 +268,40 @@ class FoodDescriptionState extends State<FoodDescription> {
                           );
                         },
                         child: Container(
+                          width: 200,
                           margin: EdgeInsets.only(bottom: 10),
                           padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                          decoration: gradientBoxDecoration(gradientColor1: food_color_blue_gradient1, gradientColor2: food_color_blue_gradient2, radius: 40),
-                          child: Text(food_lbl_view_menu, style: primaryTextStyle(color: white)),
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(0, 0, 0, 0.171),
+                                blurRadius: 15,
+                                spreadRadius: 0,
+                                offset: Offset(
+                                  0,
+                                  5,
+                                ),
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(50),
+                            color: appStore.isDarkModeOn ? const Color.fromARGB(255, 255, 255, 255) : food_colorPrimary,
+                          ),
+                          child: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(food_lbl_view_menu,
+                                style: primaryTextStyle(
+                                    color: appStore.isDarkModeOn ? food_colorPrimary : Colors.white,
+                                    weight: FontWeight.bold,
+                                    size: 15)),
+                          )),
                         ),
                       ),
-                      bottomBillDetail(context, food_color_green_gradient1, food_color_green_gradient2, food_lbl_order_now, onTap: () {
+                      bottomBillDetail(
+                        context,      food_colorPrimary,
+                                  const Color.fromARGB(158, 228, 87, 90),
+                           food_lbl_order_now,
+                          onTap: () {
                         FoodBookCart().launch(context);
                       }),
                     ],
@@ -299,8 +353,14 @@ class ItemList extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     children: [
-                      WidgetSpan(child: Padding(padding: EdgeInsets.only(right: 4), child: Image.asset(food_c_type, color: food_colorAccent, width: 16, height: 16))),
-                      TextSpan(text: model.name, style: primaryTextStyle(size: 16, color: appStore.isDarkModeOn ? white : food_textColorPrimary)),
+                      WidgetSpan(
+                          child: Padding(
+                              padding: EdgeInsets.only(right: 4),
+                              child: Image.asset(food_c_type, color: food_colorAccent, width: 16, height: 16))),
+                      TextSpan(
+                          text: model.name,
+                          style:
+                              primaryTextStyle(size: 16, color: appStore.isDarkModeOn ? white : food_textColorPrimary)),
                     ],
                   ),
                 ),

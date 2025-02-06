@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:food_app_prokit/utils/FoodColors.dart';
 
 class Message {
   static void show({
@@ -7,7 +8,7 @@ class Message {
     Toast? toastLength = Toast.LENGTH_SHORT,
     ToastGravity? gravity = ToastGravity.BOTTOM,
     int timeInSecForIosWeb = 1,
-    Color? backgroundColor = Colors.green,
+    Color? backgroundColor =food_colorPrimary,
     Color? textColor = Colors.white,
     double? fontSize = 18,
   }) {

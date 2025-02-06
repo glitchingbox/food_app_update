@@ -13,7 +13,7 @@ class AppThemeData {
     scaffoldBackgroundColor: whiteColor,
     primaryColor: appColorPrimary,
     primaryColorDark: appColorPrimary,
-    cardColor: Colors.red,
+    cardColor: Color.fromARGB(255, 233, 140, 1),
     hoverColor: Colors.white54,
     dividerColor: viewLineColor,
     fontFamily: GoogleFonts.openSans().fontFamily,

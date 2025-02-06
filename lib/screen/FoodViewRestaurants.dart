@@ -58,7 +58,18 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
     ];
   }
 
-  final List<String> content = ['Apple', 'Banana', 'Orange', 'Pomme', 'Carambola', 'Cherries', 'Date Fruit', 'A Fruit with a really long name', 'Durian', 'Grapefruit'];
+  final List<String> content = [
+    'Apple',
+    'Banana',
+    'Orange',
+    'Pomme',
+    'Carambola',
+    'Cherries',
+    'Date Fruit',
+    'A Fruit with a really long name',
+    'Durian',
+    'Grapefruit'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +85,10 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
             return SingleChildScrollView(
               child: IntrinsicHeight(
                 child: Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)), color: context.cardColor),
+                
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24), bottomLeft: Radius.circular(24), bottomRight: Radius.circular(24)),
+                      color: food_colorPrimaryDark),
                   height: MediaQuery.of(context).size.height,
                   padding: EdgeInsets.all(16),
                   child: SingleChildScrollView(
@@ -106,7 +120,10 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                                   i,
                                   Tooltip(
                                     textStyle: TextStyle(fontSize: 16),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: food_colorPrimary, boxShadow: defaultBoxShadow()),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: food_colorPrimary,
+                                        boxShadow: defaultBoxShadow()),
                                     padding: EdgeInsets.all(8),
                                     message: e.name!,
                                     child: InkWell(
@@ -115,10 +132,14 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                                         setState(() {});
                                       },
                                       child: Container(
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: e.isCheck ? food_colorPrimary : food_view_color),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                                            color: e.isCheck ? food_colorPrimary : food_view_color),
                                         margin: EdgeInsets.all(4),
                                         padding: EdgeInsets.all(8),
-                                        child: Text(e.name!, style: secondaryTextStyle(color: e.isCheck ? white : black), textAlign: TextAlign.center),
+                                        child: Text(e.name!,
+                                            style: secondaryTextStyle(color: e.isCheck ? white : black),
+                                            textAlign: TextAlign.center),
                                       ),
                                     ),
                                   ),
@@ -144,7 +165,9 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                               },
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: mTime == index ? food_colorPrimary : food_view_color),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: mTime == index ? food_colorPrimary : food_view_color),
                                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                                 child: Text(
                                   mPeopleList[index],
@@ -153,7 +176,8 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                               ),
                             );
                           },
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, mainAxisSpacing: 16, crossAxisSpacing: 16, childAspectRatio: 2.0),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, mainAxisSpacing: 16, crossAxisSpacing: 16, childAspectRatio: 2.0),
                         ),
                         SizedBox(height: 16),
                         Text(food_lbl_more_filter, style: primaryTextStyle()),
@@ -165,7 +189,10 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                                     i,
                                     Tooltip(
                                       textStyle: TextStyle(fontSize: 16),
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: food_colorPrimary, boxShadow: defaultBoxShadow()),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: food_colorPrimary,
+                                          boxShadow: defaultBoxShadow()),
                                       padding: EdgeInsets.all(8),
                                       message: e.title!,
                                       child: InkWell(
@@ -174,10 +201,14 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                                           setState(() {});
                                         },
                                         child: Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: e.isCheck ? food_colorPrimary : food_view_color),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                                              color: e.isCheck ? food_colorPrimary : food_view_color),
                                           margin: EdgeInsets.all(4),
                                           padding: EdgeInsets.all(8),
-                                          child: Text(e.title!, style: secondaryTextStyle(color: e.isCheck ? white : black), textAlign: TextAlign.center),
+                                          child: Text(e.title!,
+                                              style: secondaryTextStyle(color: e.isCheck ? white : black),
+                                              textAlign: TextAlign.center),
                                         ),
                                       ),
                                     ),
@@ -196,7 +227,9 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(top: 8, bottom: 8),
-                                  decoration: BoxDecoration(border: Border.all(color: food_textColorPrimary), borderRadius: BorderRadius.circular(50)),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: food_textColorPrimary),
+                                      borderRadius: BorderRadius.circular(50)),
                                   child: Text(food_lbl_cancel, style: primaryTextStyle()).center(),
                                 ),
                               ),
@@ -210,7 +243,8 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(top: 8, bottom: 8),
-                                  decoration: BoxDecoration(color: food_colorPrimary, borderRadius: BorderRadius.circular(50)),
+                                  decoration:
+                                      BoxDecoration(color: food_colorPrimary, borderRadius: BorderRadius.circular(50)),
                                   child: Text(food_lbl_filter, style: primaryTextStyle(color: food_white)).center(),
                                 ),
                               ),
@@ -232,10 +266,10 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
       backgroundColor: food_app_background,
       appBar: appBarWidget(
         '',
-        color: context.cardColor,
+        color: food_colorPrimaryDark,
         actions: [
           IconButton(
-            icon: Icon(Icons.filter_list, color: appStore.isDarkModeOn ? white : black),
+            icon: Icon(Icons.filter_list, color: appStore.isDarkModeOn ? white : food_colorPrimary),
             onPressed: () {
               mFilter();
             },
@@ -252,14 +286,14 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                     Container(
                       decoration: BoxDecoration(
                         boxShadow: defaultBoxShadow(),
-                        color: appStore.isDarkModeOn ? scaffoldDarkColor : white,
+                        color: appStore.isDarkModeOn ? scaffoldDarkColor : food_colorPrimaryDark,
                       ),
                       padding: EdgeInsets.all(16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(food_lbl_lunch_in_delhi_ncr , style: boldTextStyle(size: 20)),
-                          SizedBox(height: 4),
+                          Text(food_lbl_lunch_in_delhi_ncr, style: boldTextStyle(size: 20,color: appStore.isDarkModeOn ?  Colors.white: food_colorPrimary,weight: FontWeight.bold ),),
+                          SizedBox(height: 16),
                           mAddress(context),
                           SizedBox(height: 16),
                           search(context),
@@ -304,7 +338,7 @@ class RestaurantsInfo extends StatelessWidget {
       },
       child: Container(
         // margin: EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: context.cardColor),
+        decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: food_colorPrimaryDark),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -320,28 +354,34 @@ class RestaurantsInfo extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(model!.name, style: primaryTextStyle(size: 18)),
-                  SizedBox(height: 4),
+                  Text(model!.name, style: primaryTextStyle(size: 18,color: food_colorPrimary,weight: FontWeight.bold)),
+                  SizedBox(height: 10),
                   Row(children: <Widget>[
                     mRating(model!.rating),
                     SizedBox(width: 4),
-                    Text(model!.review, style: primaryTextStyle(color: food_textColorSecondary)),
+                    Text(model!.review, style: primaryTextStyle(color: food_black,size: 15,weight: FontWeight.w600)),
                   ]),
                   SizedBox(height: 4),
                   Row(
                     children: <Widget>[
-                      Text(model!.rs, style: primaryTextStyle(color: food_textColorSecondary)),
+                      Text(model!.rs, style: primaryTextStyle(color:food_black,size: 15,weight: FontWeight.bold)),
                       SizedBox(width: 4),
-                      Container(decoration: BoxDecoration(shape: BoxShape.circle, color: food_view_color), width: 8, height: 8),
+                      Container(
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: food_colorPrimary),
+                          width: 8,
+                          height: 8),
                       SizedBox(width: 4),
-                      Text(model!.sector, style: primaryTextStyle(color: food_textColorSecondary)),
+                      Text(model!.sector, style: primaryTextStyle(color: food_black,size: 15,weight: FontWeight.w600)),
                       SizedBox(width: 4),
-                      Container(decoration: BoxDecoration(shape: BoxShape.circle, color: food_view_color), width: 8, height: 8),
+                      Container(
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: food_colorPrimary),
+                          width: 8,
+                          height: 8),
                       SizedBox(width: 4),
-                      Text(model!.kms, style: primaryTextStyle(color: food_textColorSecondary)),
+                      Text(model!.kms, style: primaryTextStyle(color: food_black,size: 15,weight: FontWeight.w600)),
                     ],
                   ),
-                  Container(margin: EdgeInsets.only(top: 16), height: 0.5, color: food_view_color, width: width),
+                  Container(margin: EdgeInsets.only(top: 16), height: 0.5, color: food_colorPrimary, width: width),
                 ],
               ),
             ),

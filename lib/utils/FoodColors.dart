@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-const food_colorPrimary = Color(0xFF3B8BEA);
-const food_colorPrimaryDark = Color(0xFF3B8BEA);
+const food_colorPrimary = Color.fromARGB(255, 58, 1, 23);
+const food_colorPrimaryDark =   Color.fromARGB(92, 252, 186, 101);
 const food_colorAccent = Color(0xFF4ec77f);
 const food_colorAccent_light = Color(0xFF4ec77f);
 const food_textColorPrimary = Color(0xFF333333);
@@ -31,6 +31,8 @@ const food_colorPrimary_light = Color(0xFFE8E8EC);
 const food_ShadowColor = Color(0X95E9EBF0);
 const food_ShadowColors = Color(0XFFE2E2E2);
 const food_orange_light = Color(0xFFFDF8F2);
+const foo_mul_new = Color.fromARGB(158, 228, 87, 90);
+const foo_mul2_new = food_colorPrimary;
 
 
 

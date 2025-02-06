@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app_prokit/screen/FoodDashboard.dart';
+import 'package:food_app_prokit/utils/FoodColors.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Foodcreateotp extends StatefulWidget {
@@ -28,7 +29,7 @@ class _FoodcreateotpState extends State<Foodcreateotp> {
           children: [
             Text(
               "Enter the OTP sent to your phone",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
             PinCodeTextField(
@@ -49,7 +50,7 @@ class _FoodcreateotpState extends State<Foodcreateotp> {
                 borderRadius: BorderRadius.circular(5),
                 fieldHeight: 50,
                 fieldWidth: 40,
-                activeColor: Colors.blue,
+                activeColor: const Color.fromARGB(255, 70, 70, 70),
                 selectedColor: Colors.orange,
                 inactiveColor: Colors.grey,
               ),
@@ -64,7 +65,7 @@ class _FoodcreateotpState extends State<Foodcreateotp> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Colors.red,
+                color: food_colorPrimary,
               ),
               child: TextButton(
                   onPressed: () async {
@@ -86,7 +87,7 @@ class _FoodcreateotpState extends State<Foodcreateotp> {
                   },
                   child: Text(
                     'OTP',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                   )),
             )
           ],

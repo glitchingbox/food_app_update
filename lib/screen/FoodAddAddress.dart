@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app_prokit/utils/FlutterToast.dart';
+import 'package:food_app_prokit/utils/FoodColors.dart';
 import 'package:food_app_prokit/utils/textformfield.dart';
 import 'package:random_string/random_string.dart';
 
@@ -119,60 +120,85 @@ class FoodAddAddressState extends State<FoodAddAddress> {
                         keyboardType: TextInputType.phone,
                         hintText: 'Mobile Number',
                       ),
+
+                      SizedBox(
+                        height: 30,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width, // Set the desired width here
-                          child: ElevatedButton(
-                            
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(Colors.blue), 
-                              // Background color
+                          width: MediaQuery.of(context).size.width,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(0, 0, 0, 0.171),
+                                  blurRadius: 15,
+                                  spreadRadius: 0,
+                                  offset: Offset(
+                                    0,
+                                    5,
+                                  ),
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(50),
+                              gradient: LinearGradient(
+                                colors: [
+                                  const Color.fromARGB(158, 228, 87, 90),
+                                  food_colorPrimary,
+                                ], // Change colors as needed
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
                             ),
-                            onPressed: () {
-                              // Validate fields
-                              if (_addressNameController.text.isEmpty ||
-                                  _pinCodeController.text.isEmpty ||
-                                  _cityController.text.isEmpty ||
-                                  _stateController.text.isEmpty ||
-                                  _addressController.text.isEmpty ||
-                                  _mobileNumberController.text.isEmpty) {
-                                Message.show(msg: 'Please fill all fields!');
-                                return;
-                              }
-                        
-                              // Prepare data to save
-                              Map<String, dynamic> foodMapInfo = {
-                                "name": _addressNameController.text.trim(),
-                                "pinCode": _pinCodeController.text.trim(),
-                                "city": _cityController.text.trim(),
-                                "state": _stateController.text.trim(),
-                                "address": _addressController.text.trim(),
-                                "mobileNumber": _mobileNumberController.text.trim(),
-                                "locationType": _selectedLocation,
-                              };
-                        
-                              // Debugging print statement
-                              print('Captured Data: $foodMapInfo');
-                        
-                              // Generate a random ID
-                              String id = randomAlphaNumeric(10);
-                        
-                              // Save data to Firestore
-                              FirebaseFirestore.instance
-                                  .collection('food') // Replace with your collection name
-                                  .doc(id)
-                                  .set(foodMapInfo)
-                                  .then((value) {
-                                Message.show(msg: 'Address Added successfully');
-                                _clearControllers();
-                                Navigator.of(context).pop();
-                              }).catchError((error) {
-                                _showMessage('Error: $error');
-                                print('Firestore Error: $error');
-                              });
-                            },
-                            child: Text('Add Address', style: TextStyle(color: Colors.white),),
+                            child: TextButton(
+                              onPressed: () {
+                                if (_addressNameController.text.isEmpty ||
+                                    _pinCodeController.text.isEmpty ||
+                                    _cityController.text.isEmpty ||
+                                    _stateController.text.isEmpty ||
+                                    _addressController.text.isEmpty ||
+                                    _mobileNumberController.text.isEmpty) {
+                                  Message.show(msg: 'Please fill all fields!');
+                                  return;
+                                }
+
+                                // Prepare data to save
+                                Map<String, dynamic> foodMapInfo = {
+                                  "name": _addressNameController.text.trim(),
+                                  "pinCode": _pinCodeController.text.trim(),
+                                  "city": _cityController.text.trim(),
+                                  "state": _stateController.text.trim(),
+                                  "address": _addressController.text.trim(),
+                                  "mobileNumber": _mobileNumberController.text.trim(),
+                                  "locationType": _selectedLocation,
+                                };
+
+                                // Debugging print statement
+                                print('Captured Data: $foodMapInfo');
+
+                                // Generate a random ID
+                                String id = randomAlphaNumeric(10);
+
+                                // Save data to Firestore
+                                FirebaseFirestore.instance
+                                    .collection('food') // Replace with your collection name
+                                    .doc(id)
+                                    .set(foodMapInfo)
+                                    .then((value) {
+                                  Message.show(msg: 'Address Added successfully');
+                                  _clearControllers();
+                                  Navigator.of(context).pop();
+                                }).catchError((error) {
+                                  _showMessage('Error: $error');
+                                  print('Firestore Error: $error');
+                                });
+                              },
+                              child: Text(
+                                'Add Address',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
                           ),
                         ),
                       )

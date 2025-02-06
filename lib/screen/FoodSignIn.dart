@@ -21,25 +21,24 @@ class FoodSignIn extends StatefulWidget {
 }
 
 class FoodSignInState extends State<FoodSignIn> {
+  Future<void> log() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) return;
 
- Future<void> log() async {
-  try {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    if (googleUser == null) return; 
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    await FirebaseAuth.instance.signInWithCredential(credential);
-   Message.show(msg: 'Google sign-in successful');
-  } catch (e) {
-    Message.show(msg: 'Google sign-in failed: $e');
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      Message.show(msg: 'Google sign-in successful');
+    } catch (e) {
+      Message.show(msg: 'Google sign-in failed: $e');
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +46,6 @@ class FoodSignInState extends State<FoodSignIn> {
     Widget mOption(var color, var icon, var value, var iconColor, valueColor) {
       return InkWell(
         onTap: () {
-          
           FoodDashboard().launch(context);
           // log();
         },
@@ -66,7 +64,10 @@ class FoodSignInState extends State<FoodSignIn> {
                     child: SvgPicture.asset(icon, color: iconColor, width: 18, height: 18),
                   ),
                 ),
-                TextSpan(text: value, style: primaryTextStyle(size: 16, color: valueColor),),
+                TextSpan(
+                  text: value,
+                  style: primaryTextStyle(size: 16, color: valueColor),
+                ),
               ],
             ),
           ),
@@ -80,7 +81,7 @@ class FoodSignInState extends State<FoodSignIn> {
           CachedNetworkImage(
             placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
             imageUrl: food_ic_login,
-            height: width *0.6,
+            height: width * 0.6,
             fit: BoxFit.cover,
             width: width,
           ),
@@ -93,9 +94,10 @@ class FoodSignInState extends State<FoodSignIn> {
                   edge: Edge.TOP,
                   height: (MediaQuery.of(context).size.width) / 10,
                   child: Container(
-                      height: (MediaQuery.of(context).size.height),
-                      width: MediaQuery.of(context).size.width,
-                      color: food_color_green),
+                    height: (MediaQuery.of(context).size.height),
+                    width: MediaQuery.of(context).size.width,
+                    color: Color.fromARGB(255, 233, 140, 1),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.topCenter,
@@ -103,10 +105,15 @@ class FoodSignInState extends State<FoodSignIn> {
                     transform: Matrix4.translationValues(0.0, -20.0, 0.0),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: appStore.isDarkModeOn ? scaffoldDarkColor : food_white),
+                        shape: BoxShape.circle,
+                        color: appStore.isDarkModeOn
+                            ? const Color.fromARGB(255, 255, 255, 255)
+                            : Color.fromARGB(255, 233, 140, 1),
+                        border: Border.all(color: Colors.white)),
                     width: width * 0.13,
                     height: width * 0.13,
-                    child: Icon(Icons.arrow_forward, color: appStore.isDarkModeOn ? white : food_textColorPrimary),
+                    child: Icon(Icons.arrow_forward,
+                        color: appStore.isDarkModeOn ? white : const Color.fromARGB(255, 255, 255, 255)),
                   ),
                 ),
                 Container(
@@ -115,7 +122,7 @@ class FoodSignInState extends State<FoodSignIn> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: width * 0.1),
-                      Text(food_app_name, style: boldTextStyle(color: food_white, size: 30)),
+                      Text(food_app_name, style: boldTextStyle(color: food_white, size: 30, weight: FontWeight.w900)),
                       SizedBox(height: width * 0.12),
                       mOption(
                           appStore.isDarkModeOn ? black : food_white,
@@ -131,7 +138,12 @@ class FoodSignInState extends State<FoodSignIn> {
                           Container(
                               height: 0.5, color: food_white, width: width * 0.07, margin: EdgeInsets.only(right: 4)),
                           Text(food_lbl_or_use_your_mobile_email.toUpperCase(),
-                              style: primaryTextStyle(color: food_white, size: 14)),
+                              style: primaryTextStyle(
+                                color: food_white,
+                                size: 12,
+                                weight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
+                              )),
                           Container(
                               height: 0.5, color: food_white, width: width * 0.07, margin: EdgeInsets.only(left: 4)),
                         ],
@@ -143,13 +155,34 @@ class FoodSignInState extends State<FoodSignIn> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              color: food_color_green,
-                              border: Border.all(color: white),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(0, 0, 0, 0.171),
+                                  blurRadius: 15,
+                                  spreadRadius: 0,
+                                  offset: Offset(
+                                    0,
+                                    5,
+                                  ),
+                                ),
+                              ],
+                              gradient: LinearGradient(
+                                colors: [
+                                  const Color.fromARGB(158, 228, 87, 90),
+                                  food_colorPrimary,
+                                ], // Change colors as needed
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              // border: Border.all(color: white),
                               borderRadius: BorderRadius.circular(50)),
                           width: width,
                           padding: EdgeInsets.all(10),
-                          child: Text(food_lbl_continue_with_email_mobile, style: primaryTextStyle(color: food_white))
-                              .center(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text(food_lbl_continue_with_email_mobile, style: primaryTextStyle(color: food_white))
+                                .center(),
+                          ),
                         ),
                       )
                     ],

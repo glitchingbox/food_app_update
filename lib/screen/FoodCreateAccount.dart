@@ -9,7 +9,6 @@ import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-
 class FoodCreateAccount extends StatefulWidget {
   static String tag = '/FoodCreateAccount';
 
@@ -42,7 +41,6 @@ class FoodCreateAccountState extends State<FoodCreateAccount> {
               Container(
                 width: width,
                 alignment: Alignment.topLeft,
-             
                 child: IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
@@ -77,7 +75,18 @@ class FoodCreateAccountState extends State<FoodCreateAccount> {
               Container(
                 margin: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    color: context.cardColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.171),
+                        blurRadius: 15,
+                        spreadRadius: 0,
+                        offset: Offset(
+                          0,
+                          5,
+                        ),
+                      ),
+                    ],
+                    color: Theme.of(context).colorScheme.onPrimary,
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(color: food_colorPrimary)),
                 child: Row(
@@ -107,17 +116,13 @@ class FoodCreateAccountState extends State<FoodCreateAccount> {
                           }
                           FirebaseAuth.instance.verifyPhoneNumber(
                             phoneNumber: _signNumberController.text.trim(),
-                            verificationCompleted: (PhoneAuthCredential credential) {
-                              
-                            },
+                            verificationCompleted: (PhoneAuthCredential credential) {},
                             verificationFailed: (FirebaseAuthException ex) {
-                         
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Verification failed: ${ex.message}")),
                               );
                             },
                             codeSent: (String verification, int? resendToken) {
-                        
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -133,9 +138,10 @@ class FoodCreateAccountState extends State<FoodCreateAccount> {
                         child: Container(
                           padding: EdgeInsets.all(14.0),
                           decoration: gradientBoxDecoration(
-                              radius: 50,
-                              gradientColor1: food_color_blue_gradient1,
-                              gradientColor2: food_color_blue_gradient2),
+                            radius: 50,
+                            gradientColor2: const Color.fromARGB(158, 228, 87, 90),
+                            gradientColor1: food_colorPrimary,
+                          ),
                           child: Icon(Icons.arrow_forward, color: food_white),
                         ),
                       ),
