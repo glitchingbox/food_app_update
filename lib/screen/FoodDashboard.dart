@@ -66,6 +66,7 @@ class FoodDashboardState extends State<FoodDashboard> {
           child: (Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              // ignore: deprecated_member_use
               SvgPicture.asset(icon, color: food_colorPrimary, width: width * 0.06, height: width * 0.06),
               Text(heading,
                   style: primaryTextStyle(
@@ -421,6 +422,7 @@ class Item extends StatelessWidget {
 
 // ignore: must_be_immutable
 
+// ignore: must_be_immutable
 class Collection extends StatelessWidget {
   late DashboardCollections model;
 

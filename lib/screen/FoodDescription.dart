@@ -183,6 +183,7 @@ class FoodDescriptionState extends State<FoodDescription> {
                         child: Row(
                           children: <Widget>[
                             SvgPicture.asset(food_ic_comass,
+                                // ignore: deprecated_member_use
                                 color: food_colorPrimary, width: width * 0.08, height: width * 0.08),
                             SizedBox(width: 10),
                             Expanded(

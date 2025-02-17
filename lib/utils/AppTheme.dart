@@ -53,6 +53,7 @@ class AppThemeData {
       systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     ),
     primaryColor: color_primary_black,
+    // ignore: deprecated_member_use
     dividerColor: Color(0xFFDADADA).withOpacity(0.3),
     primaryColorDark: color_primary_black,
     textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),

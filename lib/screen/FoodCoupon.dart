@@ -122,6 +122,7 @@ class FoodCouponState extends State<FoodCoupon> {
   }
 }
 
+// ignore: must_be_immutable
 class Coupon extends StatelessWidget {
   late Coupons model;
 

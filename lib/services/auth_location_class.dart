@@ -35,6 +35,7 @@ class AuthLocationClass {
     // Get current location
     try {
       Position position = await Geolocator.getCurrentPosition(
+      // ignore: deprecated_member_use
       desiredAccuracy: LocationAccuracy.high,
       );
       print("Location: ${position.latitude}, ${position.longitude}");

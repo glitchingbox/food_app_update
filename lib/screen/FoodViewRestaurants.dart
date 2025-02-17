@@ -88,7 +88,7 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                 
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24), bottomLeft: Radius.circular(24), bottomRight: Radius.circular(24)),
-                      color: food_colorPrimaryDark),
+                      color: Colors.white),
                   height: MediaQuery.of(context).size.height,
                   padding: EdgeInsets.all(16),
                   child: SingleChildScrollView(
@@ -110,7 +110,7 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                           },
                         ),
                         SizedBox(height: 16),
-                        Text(food_lbl_cuisine, style: primaryTextStyle()),
+                        Text(food_lbl_cuisine, style: primaryTextStyle(color: Colors.black,weight: FontWeight.bold)),
                         SizedBox(height: 16),
                         Wrap(
                           children: list
@@ -244,7 +244,14 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
                                 child: Container(
                                   padding: EdgeInsets.only(top: 8, bottom: 8),
                                   decoration:
-                                      BoxDecoration(color: food_colorPrimary, borderRadius: BorderRadius.circular(50)),
+                                      BoxDecoration(   gradient: LinearGradient(
+                                colors: [
+                                  const Color.fromARGB(158, 228, 87, 90),
+                                  food_colorPrimary,
+                                ], // Change colors as needed
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ), borderRadius: BorderRadius.circular(50)),
                                   child: Text(food_lbl_filter, style: primaryTextStyle(color: food_white)).center(),
                                 ),
                               ),
@@ -263,10 +270,10 @@ class FoodViewRestaurantsState extends State<FoodViewRestaurants> {
     }
 
     return Scaffold(
-      backgroundColor: food_app_background,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: appBarWidget(
         '',
-        color: food_colorPrimaryDark,
+       
         actions: [
           IconButton(
             icon: Icon(Icons.filter_list, color: appStore.isDarkModeOn ? white : food_colorPrimary),

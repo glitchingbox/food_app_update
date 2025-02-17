@@ -107,6 +107,7 @@ class MapPageState extends State<MapPage> {
   }
 
   void setCustomMapPin() async {
+    // ignore: deprecated_member_use
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.5), food_ic_map);
   }
 
@@ -122,6 +123,7 @@ class MapPageState extends State<MapPage> {
       markers: _markers,
       initialCameraPosition: initialLocation,
       onMapCreated: (GoogleMapController controller) {
+        // ignore: deprecated_member_use
         controller.setMapStyle(Utils.mapStyles);
         _controller.complete(controller);
         setState(() {

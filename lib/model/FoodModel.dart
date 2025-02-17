@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Restaurants {
   var name;
   var image;
@@ -26,15 +28,17 @@ class ViewRestaurants {
   var offer;
   var info;
 
-  ViewRestaurants(this.name,
-      this.image,
-      this.rating,
-      this.review,
-      this.rs,
-      this.sector,
-      this.kms,
-      this.offer,
-      this.info,);
+  ViewRestaurants(
+    this.name,
+    this.image,
+    this.rating,
+    this.review,
+    this.rs,
+    this.sector,
+    this.kms,
+    this.offer,
+    this.info,
+  );
 }
 
 // ignore: camel_case_types
@@ -61,6 +65,8 @@ class ReviewModel {
   var duration;
 
   ReviewModel(this.image, this.review, this.rate, this.duration);
+
+  static fromFirestore(QueryDocumentSnapshot<Map<String, dynamic>> doc) {}
 }
 
 class Coupons {
@@ -82,6 +88,5 @@ class DataFilter {
   String? name;
   String? title;
   bool isCheck;
-
   DataFilter({this.name = '', this.title, this.isCheck = false});
 }

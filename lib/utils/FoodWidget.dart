@@ -85,6 +85,7 @@ String food_lbl_address_dashboard = "Add your location...";
 Future<void> _getCurrentLocation() async {
   try {
     Position position = await Geolocator.getCurrentPosition(
+      // ignore: deprecated_member_use
       desiredAccuracy: LocationAccuracy.high,
     );
 

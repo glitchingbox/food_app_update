@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app_prokit/services/order_class_helper.dart';
+import 'package:food_app_prokit/utils/FlutterToast.dart';
 import 'package:food_app_prokit/utils/FoodColors.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -16,9 +17,9 @@ class _OrderOnlineState extends State<OrderOnline> {
 
   void placeOrder() {
     _firestoreService.addOrder('Pizza', 2, 9.99).then((_) {
-      print("Order placed successfully!");
+      Message.show(msg: "Order placed successfully!");
     }).catchError((error) {
-      print("Failed to place order: $error");
+      Message.show(msg:"Failed to place order: $error");
     });
   }
 
@@ -29,7 +30,14 @@ class _OrderOnlineState extends State<OrderOnline> {
       child: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: food_colorPrimary,
+             gradient: LinearGradient(
+                                colors: [
+                                  const Color.fromARGB(158, 228, 87, 90),
+                                  food_colorPrimary,
+                                ], // Change colors as needed
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
           borderRadius: BorderRadius.circular(50),
           boxShadow: [
             BoxShadow(

@@ -47,7 +47,6 @@ void main() async {
   });
 
   //forground
-
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     String payloadContent = jsonEncode(message.data);
     print('Message found in background..!');

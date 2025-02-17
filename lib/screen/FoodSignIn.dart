@@ -61,6 +61,7 @@ class FoodSignInState extends State<FoodSignIn> {
                 WidgetSpan(
                   child: Padding(
                     padding: EdgeInsets.only(right: 4),
+                    // ignore: deprecated_member_use
                     child: SvgPicture.asset(icon, color: iconColor, width: 18, height: 18),
                   ),
                 ),
