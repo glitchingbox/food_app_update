@@ -18,7 +18,6 @@ import 'FoodReview.dart';
 
 class FoodRestaurantsDescription extends StatefulWidget {
   static String tag = '/FoodRestaurantsDescription';
-
   @override
   FoodRestaurantsDescriptionState createState() => FoodRestaurantsDescriptionState();
 }
@@ -28,7 +27,6 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
   late List<ReviewModel> mReviewList;
   late List<FoodDish> mList2;
   var mPeopleList, mCuisine;
-
   @override
   void initState() {
     super.initState();
@@ -65,7 +63,6 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
     double expandHeight = MediaQuery.of(context).size.height * 0.33;
     var width = MediaQuery.of(context).size.width;
     var mTime = 0;
-
     Widget mOption(var icon, var value) {
       return Container(
         child: Column(
@@ -136,10 +133,10 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
 
     // ignore: missing_return
     Widget? reviewBottomSheet(BuildContext context) {
-      TextEditingController foodDescriptionController = TextEditingController();
       final ReviewData _reviewData = ReviewData();
-      int selectedRating = 0; // To store selected rating
+      int selectedRating = 0;
       List<String> selectedTags = [];
+      TextEditingController foodDescriptionController = TextEditingController();
       showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -183,7 +180,7 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                                               colors: [
                                                 const Color.fromARGB(158, 228, 87, 90),
                                                 food_colorPrimary,
-                                              ], // Change colors as needed
+                                              ],
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight,
                                             ),
@@ -588,9 +585,7 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                           if (!snapshot.hasData || snapshot.data!.isEmpty) {
                             return Center(child: Text("No reviews yet"));
                           }
-
                           List<ReviewModel> reviews = snapshot.data!;
-
                           return ListView.builder(
                             itemCount: reviews.length,
                             shrinkWrap: true,
@@ -724,7 +719,7 @@ class Review extends StatelessWidget {
           ),
           SizedBox(width: 10),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:CrossAxisAlignment.start,
             children: <Widget>[
               Text(model.review),
               Row(

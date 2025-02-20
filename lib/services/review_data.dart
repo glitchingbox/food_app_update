@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app_prokit/model/FoodModel.dart';
+import 'package:food_app_prokit/utils/FlutterToast.dart';
 
 class ReviewData {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -13,13 +14,13 @@ class ReviewData {
         'selectedTags': selectedTags,
         'timestamp': FieldValue.serverTimestamp(),
       });
-      print("Review added successfully!");
+      Message.show(msg :"Review added successfully!");
     } catch (e) {
-      print("Firestore write error: ${e.toString()}");
+      Message.show(msg :"Firestore write error: ${e.toString()}");
     }
   }
 
-  /// ✅ Fetch Reviews from Firestore in Real-time
+
   Stream<List<ReviewModel>> getReviews() {
     return _firestore.collection('Reviews')
         .orderBy('timestamp', descending: true)
@@ -30,9 +31,9 @@ class ReviewData {
               return ReviewModel.fromFirestore(doc);
             } catch (e) {
               print("Error parsing review: $e");
-              return null; // Skip faulty document
+              return null;
             }
-          }).whereType<ReviewModel>().toList(); // ✅ Filter out null values
+          }).whereType<ReviewModel>().toList(); 
         });
   }
 }

@@ -16,26 +16,21 @@ import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:food_app_prokit/utils/FoodImages.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
-import 'package:nb_utils/nb_utils.dart';
-
+import 'package:nb_utils/nb_utils.dart';                
 
 class FoodDashboard extends StatefulWidget {
   static String tag = '/FoodDashboard';
-
   @override
   FoodDashboardState createState() => FoodDashboardState();
 }
-
 class FoodDashboardState extends State<FoodDashboard> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   late List<DashboardCollections> mCollectionList;
   late List<Restaurants> mBakeryList;
   late List<Restaurants> mDeliveryList;
   late List<Restaurants> mDineOutList;
   late List<DashboardCollections> mExperienceList;
   late List<Restaurants> mCafeList;
-
   @override
   void initState() {
     super.initState();
@@ -100,23 +95,25 @@ class FoodDashboardState extends State<FoodDashboard> {
                   IconButton(
                     icon: Icon(
                       Icons.menu,
-                     color: appStore.isDarkModeOn ?  Colors.white: food_colorPrimary,
+                      color: appStore.isDarkModeOn ? Colors.white : food_colorPrimary,
                     ),
                     onPressed: () {
                       _scaffoldKey.currentState!.openDrawer();
                     },
                   ),
-                  Text(food_app_name, style: boldTextStyle(size: 18, color: appStore.isDarkModeOn ?  Colors.white: Colors.black, weight: FontWeight.bold)),
+                  Text(food_app_name,
+                      style: boldTextStyle(
+                          size: 18,
+                          color: appStore.isDarkModeOn ? Colors.white : Colors.black,
+                          weight: FontWeight.bold)),
                   IconButton(
                     icon: Icon(
                       Icons.shopping_cart,
-                     color: appStore.isDarkModeOn ?  Colors.white: food_colorPrimary,
+                      color: appStore.isDarkModeOn ? Colors.white : food_colorPrimary,
                     ),
                     onPressed: () {
                       FoodBookCart().launch(context);
                     },
-                   
-                    
                   ),
                 ],
               ),
@@ -140,7 +137,6 @@ class FoodDashboardState extends State<FoodDashboard> {
                             context,
                           ),
                           SizedBox(height: 16),
-
                           //........................Food Order...............
                           Row(
                             children: <Widget>[
@@ -148,7 +144,7 @@ class FoodDashboardState extends State<FoodDashboard> {
                                 child: topGradient(
                                   // food_colorPrimary,
                                   // food_colorPrimaryDark,
-                                     food_colorPrimary,
+                                  food_colorPrimary,
                                   const Color.fromARGB(158, 228, 87, 90),
                                   food_cloche,
                                   food_lbl_food_order,
@@ -205,7 +201,6 @@ class FoodDashboardState extends State<FoodDashboard> {
                       decoration: BoxDecoration(
                         boxShadow: defaultBoxShadow(),
                         color: const Color.fromARGB(92, 252, 186, 101),
-                        
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +220,8 @@ class FoodDashboardState extends State<FoodDashboard> {
                           ),
                           mViewAll(context, food_lbl_view_all_restaurants, onTap: () {
                             FoodViewRestaurants().launch(context);
-                          }),
+                          },
+                          ),
                         ],
                       ),
                     ),
@@ -442,7 +438,6 @@ class Collection extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             ClipRRect(
-              
               borderRadius: BorderRadius.all(Radius.circular(10)),
               child: CachedNetworkImage(
                 placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
@@ -455,17 +450,17 @@ class Collection extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                    boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromRGBO(0, 0, 0, 0.171),
-                                  blurRadius: 15,
-                                  spreadRadius: 0,
-                                  offset: Offset(
-                                    0,
-                                    5,
-                                  ),
-                                ),
-                              ],
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.171),
+                    blurRadius: 15,
+                    spreadRadius: 0,
+                    offset: Offset(
+                      0,
+                      5,
+                    ),
+                  ),
+                ],
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -539,9 +534,7 @@ class FoodSideMenuState extends State<FoodSideMenu> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-
     var mView = Container(width: MediaQuery.of(context).size.width, height: 0.5, color: food_view_color);
-
     return SafeArea(
       child: SizedBox(
         width: width * 0.85,
@@ -632,12 +625,18 @@ class FoodSideMenuState extends State<FoodSideMenu> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(food_lbl_quick_searches, style: primaryTextStyle()),
-                      Text(food_lbl_cafe, style: primaryTextStyle(color: food_textColorSecondary),),
+                      Text(
+                        food_lbl_cafe,
+                        style: primaryTextStyle(color: food_textColorSecondary),
+                      ),
                       Text(
                         food_hint_search_restaurants,
-                        style: primaryTextStyle(color:food_textColorSecondary),
+                        style: primaryTextStyle(color: food_textColorSecondary),
                       ),
-                      Text(food_lbl_bars,style:primaryTextStyle(color:food_textColorSecondary),),
+                      Text(
+                        food_lbl_bars,
+                        style: primaryTextStyle(color: food_textColorSecondary),
+                      ),
                     ],
                   ),
                 ),
@@ -645,7 +644,7 @@ class FoodSideMenuState extends State<FoodSideMenu> {
             ),
           ),
         ),
-  ),
-  );
+      ),
+    );
   }
-  }
+}

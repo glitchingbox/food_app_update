@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app_prokit/model/FoodModel.dart';
 import 'package:food_app_prokit/screen/FoodRestaurantsDescription.dart';
 import 'package:food_app_prokit/services/review_data.dart';
