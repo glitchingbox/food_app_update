@@ -71,7 +71,8 @@ class FoodDashboardState extends State<FoodDashboard> {
                         255,
                         255,
                       ),
-                      weight: FontWeight.bold)),
+                      weight: FontWeight.bold),
+                      ),
               Text(
                 subHeading,
                 style: primaryTextStyle(color: food_white, size: 12, weight: FontWeight.bold),

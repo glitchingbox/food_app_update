@@ -44,23 +44,20 @@ void main() async {
       print('Background notification tapped..!');
       navigatorKey.currentState!.pushNamed('/FoodDashboard', arguments: message);
     }
-  }
-  );
+  });
 
   //forground
-  FirebaseMessaging.onMessage.listen((RemoteMessage message){
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     String payloadContent = jsonEncode(message.data);
     print('Message found in background..!');
     if (message.notification != null) {
       NotificationHelper.showLocalNotfications(
           title: message.notification!.title!, body: message.notification!.title!, payload: payloadContent);
-    }
+  }
   }
   );
-
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
