@@ -5,8 +5,6 @@ import 'package:food_app_prokit/services/review_data.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
 
-
-
 class FoodReview extends StatefulWidget {
   static String tag = '/FoodReview';
 
@@ -15,7 +13,7 @@ class FoodReview extends StatefulWidget {
 }
 
 class FoodReviewState extends State<FoodReview> {
-  final ReviewData _reviewData = ReviewData(); 
+  final ReviewData _reviewData = ReviewData();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class FoodReviewState extends State<FoodReview> {
       child: Scaffold(
         appBar: appBar(context, food_lbl_reviews),
         body: StreamBuilder<List<ReviewModel>>(
-          stream: _reviewData.getReviews(), 
+          stream: _reviewData.getReviews(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -38,12 +36,13 @@ class FoodReviewState extends State<FoodReview> {
             return ListView.builder(
               itemCount: reviews.length,
               itemBuilder: (context, index) {
-                return Review(reviews[index], index);
+                return Review(
+                  model: reviews[index],
+                );
               },
             );
           },
         ),
-      
       ),
     );
   }

@@ -28,8 +28,10 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
   late List<FoodDish> mList2;
   var mPeopleList, mCuisine;
   @override
+  late TextEditingController controller;
   void initState() {
     super.initState();
+    controller = TextEditingController();
     mReviewList = addReviewData();
     mList2 = orderData();
     mPeopleList = ["1", "2", "3", "4", "5"];
@@ -132,11 +134,11 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
     }
 
     // ignore: missing_return
-    Widget? reviewBottomSheet(BuildContext context) {
+    Widget? reviewBottomSheet(
+        {required BuildContext context, required TextEditingController foodDescriptionController}) {
       final ReviewData _reviewData = ReviewData();
       int selectedRating = 0;
       List<String> selectedTags = [];
-      TextEditingController foodDescriptionController = TextEditingController();
       showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -290,10 +292,11 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                                     await _reviewData.addReview(reviewText, selectedRating, selectedTags);
 
                                     print("Review submitted to Firestore");
+                                    foodDescriptionController.clear();
                                     Navigator.pop(context);
-                                    setState(() {
-                                      foodDescriptionController.clear();
-                                    });
+                                    // setState(() {
+                                    //   foodDescriptionController.clear();
+                                    // });
                                   } else {
                                     print("Empty review - not submitting");
                                     Message.show(msg: "Please enter a review before submitting.");
@@ -541,7 +544,7 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                       SizedBox(height: 16),
                       GestureDetector(
                         onTap: () {
-                          reviewBottomSheet(context);
+                          reviewBottomSheet(context: context, foodDescriptionController: controller);
                         },
                         child: Container(
                           width: width,
@@ -583,7 +586,8 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                           }
 
                           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return Center(child: Text("No reviews yet"));
+                            return Center(
+                                child:Text("No reviews yet"),);
                           }
                           List<ReviewModel> reviews = snapshot.data!;
                           return ListView.builder(
@@ -591,7 +595,7 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return Review(reviews[index], index);
+                              return Review(model: reviews[index]);
                             },
                           );
                         },
@@ -699,11 +703,14 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
 
 // ignore: must_be_immutable
 class Review extends StatelessWidget {
-  late ReviewModel model;
+  final ReviewModel model;
 
-  Review(ReviewModel model, int pos) {
-    this.model = model;
-  }
+  Review({required this.model});
+
+  // Review(ReviewModel model, int pos, this.model) {
+
+  //   this.model = model;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -719,7 +726,7 @@ class Review extends StatelessWidget {
           ),
           SizedBox(width: 10),
           Column(
-            crossAxisAlignment:CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(model.review),
               Row(

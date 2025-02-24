@@ -65,7 +65,10 @@ Widget search(BuildContext context) {
                   child: Icon(Icons.search, color: appStore.textSecondaryColor, size: 18))),
           TextSpan(
             text: food_hint_search_restaurants,
-            style: TextStyle( color: appStore.isDarkModeOn ?  Colors.white: Colors.black38,  fontSize: 16, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                color: appStore.isDarkModeOn ? Colors.white : Colors.black38,
+                fontSize: 16,
+                fontWeight: FontWeight.w500),
             onEnter: (event) {
               Navigator.push(
                   context,
@@ -129,7 +132,8 @@ Widget mAddress(BuildContext context) {
             (context as Element).markNeedsBuild();
           },
           child: Text(food_lbl_change,
-              style: primaryTextStyle(color: appStore.isDarkModeOn ?  Colors.white: food_colorPrimary, size: 14, weight: FontWeight.bold)),
+              style: primaryTextStyle(
+                  color: appStore.isDarkModeOn ? Colors.white : food_colorPrimary, size: 14, weight: FontWeight.bold)),
         ),
       ],
     ),
@@ -328,6 +332,7 @@ Padding foodEditTextStyle(var hintText,
   return Padding(
     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
     child: TextFormField(
+      controller: controller,
       keyboardType: keyboardType,
       style: primaryTextStyle(size: 14),
       decoration: InputDecoration(
@@ -453,7 +458,7 @@ Widget bottomBillDetail(BuildContext context, var gColor1, var gColor2, var valu
   return Container(
     height: 100,
     decoration:
-        BoxDecoration(boxShadow: defaultBoxShadow(), border: Border.all(color: white), color:food_colorPrimaryDark),
+        BoxDecoration(boxShadow: defaultBoxShadow(), border: Border.all(color: white), color: food_colorPrimaryDark),
     padding: EdgeInsets.all(16),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

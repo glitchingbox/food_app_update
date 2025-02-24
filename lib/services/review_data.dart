@@ -19,8 +19,6 @@ class ReviewData {
       Message.show(msg :"Firestore write error: ${e.toString()}");
     }
   }
-
-
   Stream<List<ReviewModel>> getReviews() {
     return _firestore.collection('Reviews')
         .orderBy('timestamp', descending: true)

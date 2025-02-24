@@ -34,10 +34,11 @@ class Fooappdescription extends State<FoodRestaurantsDescription> {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            return Review(reviews[index], index);
+             return  reviews[index].review;
           },
         );
       },
     );
   }
 }
+    
