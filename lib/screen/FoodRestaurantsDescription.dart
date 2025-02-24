@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app_prokit/model/FoodModel.dart';
 import 'package:food_app_prokit/services/review_data.dart';
@@ -52,6 +53,15 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
     ];
 
     changeStatusColor(Colors.transparent);
+  }
+
+  Future<void> addReview(String reviewText, int rating, List<String> tags) async {
+    await FirebaseFirestore.instance.collection('Reviews').add({
+      'review': reviewText,
+      'selectedRating': rating,
+      'selectedTags': tags,
+      'timestamp': Timestamp.now(),
+    });
   }
 
   @override
@@ -582,20 +592,42 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                         stream: ReviewData().getReviews(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(child: CircularProgressIndicator());
                           }
 
-                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return Center(
-                                child:Text("No reviews yet"),);
+                          if (snapshot.hasError) {
+                            print("Error fetching reviews: ${snapshot.error}");
+                            return const Center(child: Text("Error loading reviews"));
                           }
-                          List<ReviewModel> reviews = snapshot.data!;
+
+                          final reviews = snapshot.data;
+
+                          if (reviews == null || reviews.isEmpty) {
+                            print("No reviews found in Firestore");
+                            return const Center(child: Text("No reviews yet"));
+                          }
+
+                          print("Loaded ${reviews.length} reviews from Firestore");
+
                           return ListView.builder(
                             itemCount: reviews.length,
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return Review(model: reviews[index]);
+                              final review = reviews[index];
+
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Review ID: ${review.image}", // Now you can access id
+                                        style:
+                                            TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey)),
+                                    Review(model: review),
+                                  ],
+                                ),
+                              );
                             },
                           );
                         },
@@ -695,10 +727,6 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
       ),
     );
   }
-
-  // getReviews() {
-
-  // }
 }
 
 // ignore: must_be_immutable

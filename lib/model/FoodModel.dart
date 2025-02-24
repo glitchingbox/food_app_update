@@ -66,6 +66,8 @@ class ReviewModel {
 
   ReviewModel(this.image, this.review, this.rate, this.duration);
 
+  get tags => null;
+
   static fromFirestore(QueryDocumentSnapshot<Map<String, dynamic>> doc) {}
 }
 
