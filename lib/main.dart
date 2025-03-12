@@ -36,9 +36,7 @@ void main() async {
   // initialize local notification helper
 
   await NotificationHelper.localNotificationInitialisation();
-
   FirebaseMessaging.onBackgroundMessage(_fireBackgroundMessaging);
-
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {
       print('Background notification tapped..!');
@@ -53,11 +51,11 @@ void main() async {
     if (message.notification != null) {
       NotificationHelper.showLocalNotfications(
           title: message.notification!.title!, body: message.notification!.title!, payload: payloadContent);
-  }
-  }
-  );
+    }
+  });
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 

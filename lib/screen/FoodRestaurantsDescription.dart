@@ -35,7 +35,15 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
     controller = TextEditingController();
     mReviewList = addReviewData();
     mList2 = orderData();
-    mPeopleList = ["1", "2", "3", "4", "5"];
+
+    mPeopleList = [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+    ];
+
     mCuisine = [
       "South Indian",
       "American",
@@ -80,7 +88,14 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
         child: Column(
           children: <Widget>[
             Icon(icon, color: food_colorPrimary, size: 20),
-            Text(value, style: primaryTextStyle(size: 15, color: Colors.black, weight: FontWeight.bold)),
+            Text(
+              value,
+              style: primaryTextStyle(
+                size: 15,
+                color: Colors.black,
+                weight: FontWeight.bold,
+              ),
+            ),
             SizedBox(
               height: 16,
             ),
@@ -95,14 +110,23 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
           children: [
             WidgetSpan(
               child: Padding(
-                  padding: EdgeInsets.only(
-                    right: 15,
-                  ),
-                  child: Icon(icon, color: food_colorPrimary, size: 18)),
+                padding: EdgeInsets.only(
+                  right: 15,
+                ),
+                child: Icon(
+                  icon,
+                  color: food_colorPrimary,
+                  size: 18,
+                ),
+              ),
             ),
             TextSpan(
-                text: value,
-                style: primaryTextStyle(size: 15, color: appStore.isDarkModeOn ? white : food_textColorPrimary)),
+              text: value,
+              style: primaryTextStyle(
+                size: 15,
+                color: appStore.isDarkModeOn ? white : food_textColorPrimary,
+              ),
+            ),
           ],
         ),
       );
@@ -182,79 +206,96 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                           Wrap(
                             children: list
                                 .asMap()
-                                .map((i, e) => MapEntry(
-                                      i,
-                                      Tooltip(
-                                        textStyle: TextStyle(fontSize: 16),
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                const Color.fromARGB(158, 228, 87, 90),
-                                                food_colorPrimary,
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            ),
-                                            boxShadow: defaultBoxShadow()),
-                                        padding: EdgeInsets.all(8),
-                                        message: e.name!,
-                                        child: InkWell(
-                                          onTap: () {
-                                            e.isCheck = !e.isCheck;
-                                            setState(() {});
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                color: e.isCheck ? food_colorPrimary : food_view_color),
-                                            margin: EdgeInsets.all(4),
-                                            padding: EdgeInsets.all(8),
-                                            child: Text(e.name!,
-                                                style: secondaryTextStyle(color: e.isCheck ? white : black),
-                                                textAlign: TextAlign.center),
+                                .map(
+                                  (i, e) => MapEntry(
+                                    i,
+                                    Tooltip(
+                                      textStyle: TextStyle(fontSize: 16),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              const Color.fromARGB(158, 228, 87, 90),
+                                              food_colorPrimary,
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
                                           ),
+                                          boxShadow: defaultBoxShadow()),
+                                      padding: EdgeInsets.all(8),
+                                      message: e.name!,
+                                      child: InkWell(
+                                        onTap: () {
+                                          e.isCheck = !e.isCheck;
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                                              color: e.isCheck ? food_colorPrimary : food_view_color),
+                                          margin: EdgeInsets.all(4),
+                                          padding: EdgeInsets.all(8),
+                                          child: Text(e.name!,
+                                              style: secondaryTextStyle(color: e.isCheck ? white : black),
+                                              textAlign: TextAlign.center),
                                         ),
                                       ),
-                                    ))
+                                    ),
+                                  ),
+                                )
                                 .values
                                 .toList(),
                           ),
                           SizedBox(height: 16),
-                          Text(food_lbl_what_did_you_like,
-                              style: primaryTextStyle(color: Colors.black, weight: FontWeight.bold)),
+                          Text(
+                            food_lbl_what_did_you_like,
+                            style: primaryTextStyle(
+                              color: Colors.black,
+                              weight: FontWeight.bold,
+                            ),
+                          ),
                           SizedBox(height: 20),
                           GridView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount: mPeopleList.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      mTime = index;
-                                    });
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: mTime == index ? food_colorPrimary : food_view_color,
-                                    ),
-                                    padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                    child: Text(mPeopleList[index],
-                                            style: primaryTextStyle(
-                                                color: mTime == index ? food_white : food_textColorPrimary))
-                                        .center(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: mPeopleList.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    mTime = index;
+                                  });
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: mTime == index ? food_colorPrimary : food_view_color,
                                   ),
-                                );
-                              },
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4, mainAxisSpacing: 16, crossAxisSpacing: 16, childAspectRatio: 2.0)),
+                                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                  child: Text(
+                                    mPeopleList[index],
+                                    style: primaryTextStyle(color: mTime == index ? food_white : food_textColorPrimary),
+                                  ).center(),
+                                ),
+                              );
+                            },
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              mainAxisSpacing: 16,
+                              crossAxisSpacing: 16,
+                              childAspectRatio: 2.0,
+                            ),
+                          ),
                           SizedBox(height: 16),
-                          Text(food_lbl_anything_else_you_want_to_add,
-                              style: primaryTextStyle(color: Colors.black, weight: FontWeight.bold)),
+                          Text(
+                            food_lbl_anything_else_you_want_to_add,
+                            style: primaryTextStyle(
+                              color: Colors.black,
+                              weight: FontWeight.bold,
+                            ),
+                          ),
                           SizedBox(height: 20),
                           foodEditTextStyle(
                             food_hint_description,
@@ -279,7 +320,12 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                                 ],
                                 gradient: LinearGradient(
                                   colors: [
-                                    const Color.fromARGB(158, 228, 87, 90),
+                                    const Color.fromARGB(
+                                      158,
+                                      228,
+                                      87,
+                                      90,
+                                    ),
                                     food_colorPrimary,
                                   ],
                                   begin: Alignment.topLeft,
@@ -296,19 +342,20 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                                   List<String> selectedTags = list.where((e) => e.isCheck).map((e) => e.name!).toList();
 
                                   if (reviewText.isNotEmpty || selectedTags.isNotEmpty) {
-                                    print(
-                                        "Submitting review: Text: $reviewText, Rating: $selectedRating, Tags: $selectedTags");
+                                    Message.show(
+                                        msg:
+                                            "Submitting review: Text: $reviewText, Rating: $selectedRating, Tags: $selectedTags");
 
                                     await _reviewData.addReview(reviewText, selectedRating, selectedTags);
 
-                                    print("Review submitted to Firestore");
+                                    Message.show(msg: "Review submitted to Firestore");
                                     foodDescriptionController.clear();
                                     Navigator.pop(context);
-                                    // setState(() {
-                                    //   foodDescriptionController.clear();
+                                    // setState((){
+                                    // foodDescriptionController.clear();
                                     // });
                                   } else {
-                                    print("Empty review - not submitting");
+                                    Message.show(msg: "Empty review - not submitting");
                                     Message.show(msg: "Please enter a review before submitting.");
                                   }
                                 },
@@ -335,7 +382,9 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
             SliverAppBar(
               expandedHeight: expandHeight,
               floating: true,
-              iconTheme: IconThemeData(color: appStore.isDarkModeOn ? white : black),
+              iconTheme: IconThemeData(
+                color: appStore.isDarkModeOn ? white : black,
+              ),
               forceElevated: innerBoxIsScrolled,
               pinned: true,
               titleSpacing: 0,
@@ -496,7 +545,7 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -516,7 +565,13 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                       iconWithTitle(Icons.schedule, food_lbl_people_typically_spend_1_2_hours)
                           .paddingOnly(top: 4, bottom: 4),
                       Divider(height: 0.5, color: food_view_color),
-                      iconWithTitle(Icons.schedule, food_lbl_you_visited_5_month_ago).paddingOnly(top: 4, bottom: 4),
+                      iconWithTitle(
+                        Icons.schedule,
+                        food_lbl_you_visited_5_month_ago,
+                      ).paddingOnly(
+                        top: 4,
+                        bottom: 4,
+                      ),
                     ],
                   ),
                 ),
@@ -527,8 +582,14 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(food_lbl_user_review,
-                          style: primaryTextStyle(color: Colors.black, size: 18, weight: FontWeight.bold)),
+                      Text(
+                        food_lbl_user_review,
+                        style: primaryTextStyle(
+                          color: Colors.black,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(height: 16),
                       Row(
                         children: <Widget>[
@@ -538,10 +599,12 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               totalRatting(food_lbl_very_good),
-                              Text(food_lbl__1_700_reviews_on_google,
-                                  style: primaryTextStyle(color: food_textColorSecondary)),
+                              Text(
+                                food_lbl__1_700_reviews_on_google,
+                                style: primaryTextStyle(color: food_textColorSecondary),
+                              ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       SizedBox(height: 16),
@@ -554,7 +617,10 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                       SizedBox(height: 16),
                       GestureDetector(
                         onTap: () {
-                          reviewBottomSheet(context: context, foodDescriptionController: controller);
+                          reviewBottomSheet(
+                            context: context,
+                            foodDescriptionController: controller,
+                          );
                         },
                         child: Container(
                           width: width,
@@ -574,7 +640,7 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                                 colors: [
                                   const Color.fromARGB(158, 228, 87, 90),
                                   food_colorPrimary,
-                                ], // Change colors as needed
+                                ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
@@ -594,37 +660,46 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return const Center(child: CircularProgressIndicator());
                           }
-
                           if (snapshot.hasError) {
                             print("Error fetching reviews: ${snapshot.error}");
                             return const Center(child: Text("Error loading reviews"));
                           }
-
                           final reviews = snapshot.data;
-
                           if (reviews == null || reviews.isEmpty) {
                             print("No reviews found in Firestore");
-                            return const Center(child: Text("No reviews yet"));
+                            return const Center(
+                              child: Text(
+                                " Review Not Found..! ",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            );
                           }
-
                           print("Loaded ${reviews.length} reviews from Firestore");
-
                           return ListView.builder(
                             itemCount: reviews.length,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final review = reviews[index];
-
                               return Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Review ID: ${review.image}", // Now you can access id
-                                        style:
-                                            TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey)),
-                                    Review(model: review),
+                                    Text(
+                                      "Review ID: ${review.review}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Review(
+                                      model: review,
+                                    ),
                                   ],
                                 ),
                               );
@@ -632,9 +707,13 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                           );
                         },
                       ),
-                      mViewAll(context, food_lbl_View_All_User_reviews, onTap: () {
-                        FoodReview().launch(context);
-                      }),
+                      mViewAll(
+                        context,
+                        food_lbl_View_All_User_reviews,
+                        onTap: () {
+                          FoodReview().launch(context); 
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -645,8 +724,14 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(height: 16),
-                      Text(food_lbl_additional_detail,
-                          style: primaryTextStyle(color: Colors.black, size: 18, weight: FontWeight.bold)),
+                      Text(
+                        food_lbl_additional_detail,
+                        style: primaryTextStyle(
+                          color: Colors.black,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(height: 16),
                       iconWithTitle(Icons.call, food_user_contact).paddingOnly(top: 4, bottom: 4),
                       Divider(height: 0.5, color: food_view_color),
@@ -660,19 +745,20 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                       SizedBox(height: 16),
                       Container(
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromRGBO(0, 0, 0, 0.171),
-                                blurRadius: 15,
-                                spreadRadius: 0,
-                                offset: Offset(
-                                  0,
-                                  5,
-                                ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromRGBO(0, 0, 0, 0.171),
+                              blurRadius: 15,
+                              spreadRadius: 0,
+                              offset: Offset(
+                                0,
+                                5,
                               ),
-                            ],
-                            borderRadius: BorderRadius.circular(20),
-                            color: appStore.isDarkModeOn ? cardDarkColor : const Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(20),
+                          color: appStore.isDarkModeOn ? cardDarkColor : const Color.fromARGB(255, 255, 255, 255),
+                        ),
                         padding: EdgeInsets.all(10),
                         child: Row(
                           children: <Widget>[
@@ -682,22 +768,35 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                                   WidgetSpan(
                                     child: Padding(
                                       padding: EdgeInsets.only(right: 8),
-                                      child: Icon(Icons.shopping_basket, color: food_color_Orange, size: 18),
+                                      child: Icon(
+                                        Icons.shopping_basket,
+                                        color: food_color_Orange,
+                                        size: 18,
+                                      ),
                                     ),
                                   ),
                                   TextSpan(
-                                      text: food_lbl_15_off,
-                                      style: primaryTextStyle(
-                                          size: 16, color: food_color_Orange, fontStyle: FontStyle.italic)),
+                                    text: food_lbl_15_off,
+                                    style: primaryTextStyle(
+                                      size: 16,
+                                      color: food_color_Orange,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                             SizedBox(width: 8),
-                            Text(food_lbl_on_total_bill_till_may_2020,
-                                style: primaryTextStyle(color: Colors.black, weight: FontWeight.bold))
+                            Text(
+                              food_lbl_on_total_bill_till_may_2020,
+                              style: primaryTextStyle(
+                                color: Colors.black,
+                                weight: FontWeight.bold,
+                              ),
+                               ),                                        
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -732,8 +831,9 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
 // ignore: must_be_immutable
 class Review extends StatelessWidget {
   final ReviewModel model;
-
-  Review({required this.model});
+  Review({
+    required this.model,
+  });
 
   // Review(ReviewModel model, int pos, this.model) {
 
@@ -750,7 +850,12 @@ class Review extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(top: 8),
-            child: CircleAvatar(radius: 20, backgroundImage: CachedNetworkImageProvider(model.image)),
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage: CachedNetworkImageProvider(
+                model.image,
+              ),
+            ),
           ),
           SizedBox(width: 10),
           Column(
@@ -762,7 +867,7 @@ class Review extends StatelessWidget {
                   mRating(model.rate),
                   Text(model.duration, style: primaryTextStyle(color: food_textColorSecondary, size: 16)),
                 ],
-              )
+              ),
             ],
           ),
         ],

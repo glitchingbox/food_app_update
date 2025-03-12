@@ -7,13 +7,14 @@ class ReviewModel {
   final List<String> selectedTags;
   final Timestamp timestamp;
 
-  ReviewModel({
-    required this.id,  // Include in the constructor
-    required this.review,
-    required this.selectedRating,
-    required this.selectedTags,
-    required this.timestamp,
-  });
+ReviewModel({
+  required this.id,  // Include in the constructor
+  required this.review,
+  required this.selectedRating,
+  required this.selectedTags,
+  required this.timestamp,
+  }
+  );
 
   // Factory method to create ReviewModel from Firestore document
   factory ReviewModel.fromFirestore(DocumentSnapshot doc) {

@@ -16,13 +16,14 @@ import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:food_app_prokit/utils/FoodImages.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
-import 'package:nb_utils/nb_utils.dart';                
+import 'package:nb_utils/nb_utils.dart';
 
 class FoodDashboard extends StatefulWidget {
   static String tag = '/FoodDashboard';
   @override
   FoodDashboardState createState() => FoodDashboardState();
 }
+
 class FoodDashboardState extends State<FoodDashboard> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   late List<DashboardCollections> mCollectionList;
@@ -63,16 +64,17 @@ class FoodDashboardState extends State<FoodDashboard> {
             children: <Widget>[
               // ignore: deprecated_member_use
               SvgPicture.asset(icon, color: food_colorPrimary, width: width * 0.06, height: width * 0.06),
-              Text(heading,
-                  style: primaryTextStyle(
-                      color: const Color.fromARGB(
-                        255,
-                        255,
-                        255,
-                        255,
-                      ),
-                      weight: FontWeight.bold),
-                      ),
+              Text(
+                heading,
+                style: primaryTextStyle(
+                    color: const Color.fromARGB(
+                      255,
+                      255,
+                      255,
+                      255,
+                    ),
+                    weight: FontWeight.bold),
+              ),
               Text(
                 subHeading,
                 style: primaryTextStyle(color: food_white, size: 12, weight: FontWeight.bold),
@@ -132,11 +134,9 @@ class FoodDashboardState extends State<FoodDashboard> {
                       child: Column(
                         children: <Widget>[
                           // mAddress(context, food_lbl_address_dashboard),
-                          mAddress(context),
+                          mAddress(context,),
                           SizedBox(height: 16),
-                          search(
-                            context,
-                          ),
+                          search(context,),
                           SizedBox(height: 16),
                           //........................Food Order...............
                           Row(
@@ -147,7 +147,7 @@ class FoodDashboardState extends State<FoodDashboard> {
                                   // food_colorPrimaryDark,
                                   food_colorPrimary,
                                   const Color.fromARGB(158, 228, 87, 90),
-                                  food_cloche,
+                                   food_cloche,
                                   food_lbl_food_order,
                                   food_lbl_find_near_by_restaurants,
                                 ),
@@ -219,9 +219,12 @@ class FoodDashboardState extends State<FoodDashboard> {
                               },
                             ),
                           ),
-                          mViewAll(context, food_lbl_view_all_restaurants, onTap: () {
-                            FoodViewRestaurants().launch(context);
-                          },
+                          mViewAll(
+                            context,
+                            food_lbl_view_all_restaurants,
+                            onTap: () {
+                              FoodViewRestaurants().launch(context);
+                            },
                           ),
                         ],
                       ),

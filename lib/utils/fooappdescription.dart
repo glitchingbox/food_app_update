@@ -11,6 +11,7 @@ class Fooappdescription extends State<FoodRestaurantsDescription> {
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => ReviewModel.fromFirestore(doc)).toList().cast<ReviewModel>());
   }
+  
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<ReviewModel>>(
@@ -20,7 +21,7 @@ class Fooappdescription extends State<FoodRestaurantsDescription> {
           return Center(child: CircularProgressIndicator());
         }
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text("No reviews yet"));
+          return Center(child: Text("No reviews yet"),);
         }
         List<ReviewModel> reviews = snapshot.data!;
         return ListView.builder(

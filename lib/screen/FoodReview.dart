@@ -11,7 +11,6 @@ class FoodReview extends StatefulWidget {
   @override
   FoodReviewState createState() => FoodReviewState();
 }
-
 class FoodReviewState extends State<FoodReview> {
   final ReviewData _reviewData = ReviewData();
 
