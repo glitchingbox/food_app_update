@@ -10,6 +10,8 @@ import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'FoodBookCart.dart';
+import '../Widgets/add_to_cart_button.dart';
+import "../Widgets/bottom_bill_detail_widget.dart";
 
 class FoodDescription extends StatefulWidget {
   static String tag = '/FoodDescription';
@@ -298,10 +300,10 @@ class FoodDescriptionState extends State<FoodDescription> {
                           )),
                         ),
                       ),
-                      bottomBillDetail(
-                        context,      food_colorPrimary,
-                                  const Color.fromARGB(158, 228, 87, 90),
-                           food_lbl_order_now,
+                      ShowBottomBillDetail(
+                             gColor1: food_colorPrimary,
+                               gColor2:    const Color.fromARGB(158, 228, 87, 90),
+                          value:  food_lbl_order_now,
                           onTap: () {
                         FoodBookCart().launch(context);
                       }),
@@ -369,7 +371,7 @@ class ItemList extends StatelessWidget {
               ],
             ),
           ),
-          Quantitybtn()
+          AddToCartButton(cartItem: model)
         ],
       ),
     );
@@ -417,7 +419,7 @@ class ItemGrid extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(model.price, style: primaryTextStyle()),
-                    Quantitybtn(),
+                    AddToCartButton(cartItem: model),
                   ],
                 ),
               ],

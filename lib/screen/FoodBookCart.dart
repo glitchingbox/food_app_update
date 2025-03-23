@@ -4,14 +4,17 @@ import 'package:food_app_prokit/model/FoodModel.dart';
 import 'package:food_app_prokit/utils/FoodColors.dart';
 import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
-import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:food_app_prokit/utils/dotted_border.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../main.dart';
 import 'FoodAddressConfirmation.dart';
 import 'FoodCoupon.dart';
 import 'FoodPayment.dart';
-
+import '../Widgets/bottom_bill_detail_widget.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/current_total_price_rovider.dart';
+import '../providers/current_cart_item_provider.dart';
+import '../Widgets/add_to_cart_button.dart';
 class FoodBookCart extends StatefulWidget {
   static String tag = '/BookCart';
   @override
@@ -68,10 +71,11 @@ class FoodBookCartState extends State<FoodBookCart> {
                 ],
               ),
             ),
-            bottomBillDetail(
-              context,      food_colorPrimary,
-                                  const Color.fromARGB(158, 228, 87, 90),
-                                   food_lbl_make_payment, onTap: () {
+            ShowBottomBillDetail(
+                gColor1: food_colorPrimary,
+                gColor2:    const Color.fromARGB(158, 228, 87, 90),
+                value:  food_lbl_order_now,
+                onTap: () {
               FoodPayment().launch(context);
             })
           ],
@@ -96,14 +100,7 @@ class FoodBookCartState extends State<FoodBookCart> {
                   children: <Widget>[
                     Text(food_lbl_your_cart, style: boldTextStyle(size: 24)),
                     SizedBox(height: 16),
-                    ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: mList2.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Cart(mList2[index], index);
-                        }),
+                    Cart(),
                     Divider(color: food_view_color, height: 0.5),
                     SizedBox(height: 8),
                     Text(food_lbl_restaurants_bill.toUpperCase(), style: boldTextStyle()),
@@ -111,7 +108,16 @@ class FoodBookCartState extends State<FoodBookCart> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(food_lbl_sub_total, style: primaryTextStyle()),
-                        Text(food_lbl_1799, style: primaryTextStyle()),
+                Consumer(// simple consumer to watch total price
+
+                  builder: (_, WidgetRef ref, __) {
+
+                    final total = ref.watch(computedValueProvider);
+                    return Text("\$$total", style: primaryTextStyle());
+                  },
+                ),
+
+
                       ],
                     ),
                     SizedBox(height: 4),
@@ -179,48 +185,61 @@ class FoodBookCartState extends State<FoodBookCart> {
 }
 
 // ignore: must_be_immutable
-class Cart extends StatelessWidget {
-  late FoodDish model;
+class Cart extends ConsumerWidget {
 
-  Cart(FoodDish model, int pos) {
-    this.model = model;
-  }
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Expanded(
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<FoodDish> cartItemsList=[];
+    final Map<String,Map<String,dynamic>>? cartItemsMap=ref.watch(currentCartItemsProvider);
+    if(cartItemsMap!=null && cartItemsMap!={})
+      {
+        cartItemsList= cartItemsMap.values.map((entry) => entry["item"] as FoodDish).toList();
+      }
+
+   return
+   cartItemsList.isEmpty?Center(child:Text("no items in cart")):
+     ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount:  cartItemsList.length,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Container(
+            margin: EdgeInsets.only(bottom: 16),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: CachedNetworkImageProvider(
-                    model.image,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: <Widget>[
-                      Text(model.name, style: primaryTextStyle()),
-                      Text(model.price, style: primaryTextStyle()),
-                      //text("sd",textColor: food_textColorSecondary),
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: CachedNetworkImageProvider(
+                          cartItemsList[index].image,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text( cartItemsList[index].name, style: primaryTextStyle()),
+                            Text( cartItemsList[index].price, style: primaryTextStyle()),
+                            //text("sd",textColor: food_textColorSecondary),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                )
+                ),
+               AddToCartButton(cartItem:cartItemsList[index])
               ],
             ),
-          ),
-          Quantitybtn()
-        ],
-      ),
-    );
+          );
+        });
+
   }
 }

@@ -12,6 +12,7 @@ import 'package:food_app_prokit/utils/AppTheme.dart';
 import 'package:food_app_prokit/utils/FoodConstants.dart';
 import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 Future _fireBackgroundMessaging(RemoteMessage message) async {
@@ -53,7 +54,7 @@ void main() async {
           title: message.notification!.title!, body: message.notification!.title!, payload: payloadContent);
     }
   });
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

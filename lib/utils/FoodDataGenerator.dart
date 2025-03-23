@@ -5,61 +5,61 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'FoodImages.dart';
 
-List<DashboardCollections> addCollectionData() {
-  List<DashboardCollections> collectionData = [];
-  collectionData.add(DashboardCollections("Gym Lover", food_ic_item4, "Starts from @E123"));
-  collectionData.add(DashboardCollections("Live Music", food_ic_item11, "Starts from @E123"));
-  collectionData.add(DashboardCollections("Friends", food_ic_item6, "Starts from @E123"));
-  collectionData.add(DashboardCollections("Gym Lover", food_ic_item4, "Starts from @E123"));
-  return collectionData;
-}
-
-List<Restaurants> addBakeryData() {
-  List<Restaurants> bakeryData = [];
-  bakeryData.add(Restaurants("Live Cake & Bakery Shop", 4, food_ic_popular2, "50 Reviews"));
-  bakeryData.add(Restaurants("Richie Rich Cake Shop", 2, food_ic_item12, "50 Reviews"));
-  bakeryData.add(Restaurants("American Dry Fruit Ice Cream", 5, food_ic_item1, "50 Reviews"));
-  bakeryData.add(Restaurants("Cake & Bakery Shop", 4, food_ic_item13, "50 Reviews"));
-  return bakeryData;
-}
-
-List<Restaurants> addDeliveryRestaurantsData() {
-  List<Restaurants> deliveryRestaurantsData = [];
-  deliveryRestaurantsData.add(Restaurants("American Chinese cuisine", 4, food_ic_popular4, "50 Reviews"));
-  deliveryRestaurantsData.add(Restaurants("Bread", 2, food_ic_popular3, "50 Reviews"));
-  deliveryRestaurantsData.add(Restaurants("Restro Bistro", 5, food_ic_item1, "50 Reviews"));
-  deliveryRestaurantsData.add(Restaurants("Hugs with mugs", 4, food_ic_item6, "50 Reviews"));
-  return deliveryRestaurantsData;
-}
-
-List<Restaurants> addDineOutRestaurantsData() {
-  List<Restaurants> dineOutRestaurantsData = [];
-  dineOutRestaurantsData.add(Restaurants("Raise The Bar \nRooftTop", 4, food_ic_item13, "50 Reviews"));
-  dineOutRestaurantsData.add(Restaurants("Destination Restro & Cafe", 2, food_ic_item14, "50 Reviews"));
-  dineOutRestaurantsData.add(Restaurants("Apple Dine", 5, food_ic_item15, "50 Reviews"));
-
-  return dineOutRestaurantsData;
-}
-
-List<Restaurants> addCafeData() {
-  List<Restaurants> cafeData = [];
-  cafeData.add(Restaurants("Domesticated turkey", 4, food_ic_item2, "50 Reviews"));
-  cafeData.add(Restaurants("Germen Chocolate Cake", 2, food_ic_item6, "50 Reviews"));
-  cafeData.add(Restaurants("Tihar", 5, food_ic_item10, "50 Reviews"));
-  cafeData.add(Restaurants("Cafe klatch", 5, food_ic_item1, "50 Reviews"));
-
-  return cafeData;
-}
-
-List<DashboardCollections> addCuisineData() {
-  List<DashboardCollections> cuisineData = [];
-  cuisineData.add(DashboardCollections("Italian", food_ic_item6, "100+ Experience"));
-  cuisineData.add(DashboardCollections("Goan", food_ic_item4, "50+ Experience"));
-  cuisineData.add(DashboardCollections("Chines", food_ic_item11, "20+ Experience"));
-  cuisineData.add(DashboardCollections("Indian", food_ic_item6, "100+ Experience"));
-
-  return cuisineData;
-}
+// List<DashboardCollections> addCollectionData() {
+//   List<DashboardCollections> collectionData = [];
+//   collectionData.add(DashboardCollections("Gym Lover", food_ic_item4, "Starts from @E123"));
+//   collectionData.add(DashboardCollections("Live Music", food_ic_item11, "Starts from @E123"));
+//   collectionData.add(DashboardCollections("Friends", food_ic_item6, "Starts from @E123"));
+//   collectionData.add(DashboardCollections("Gym Lover", food_ic_item4, "Starts from @E123"));
+//   return collectionData;
+// }
+//
+// List<Restaurants> addBakeryData() {
+//   List<Restaurants> bakeryData = [];
+//   bakeryData.add(Restaurants("Live Cake & Bakery Shop", 4, food_ic_popular2, "50 Reviews"));
+//   bakeryData.add(Restaurants("Richie Rich Cake Shop", 2, food_ic_item12, "50 Reviews"));
+//   bakeryData.add(Restaurants("American Dry Fruit Ice Cream", 5, food_ic_item1, "50 Reviews"));
+//   bakeryData.add(Restaurants("Cake & Bakery Shop", 4, food_ic_item13, "50 Reviews"));
+//   return bakeryData;
+// }
+//
+// List<Restaurants> addDeliveryRestaurantsData() {
+//   List<Restaurants> deliveryRestaurantsData = [];
+//   deliveryRestaurantsData.add(Restaurants("American Chinese cuisine", 4, food_ic_popular4, "50 Reviews"));
+//   deliveryRestaurantsData.add(Restaurants("Bread", 2, food_ic_popular3, "50 Reviews"));
+//   deliveryRestaurantsData.add(Restaurants("Restro Bistro", 5, food_ic_item1, "50 Reviews"));
+//   deliveryRestaurantsData.add(Restaurants("Hugs with mugs", 4, food_ic_item6, "50 Reviews"));
+//   return deliveryRestaurantsData;
+// }
+//
+// List<Restaurants> addDineOutRestaurantsData() {
+//   List<Restaurants> dineOutRestaurantsData = [];
+//   dineOutRestaurantsData.add(Restaurants("Raise The Bar \nRooftTop", 4, food_ic_item13, "50 Reviews"));
+//   dineOutRestaurantsData.add(Restaurants("Destination Restro & Cafe", 2, food_ic_item14, "50 Reviews"));
+//   dineOutRestaurantsData.add(Restaurants("Apple Dine", 5, food_ic_item15, "50 Reviews"));
+//
+//   return dineOutRestaurantsData;
+// }
+//
+// List<Restaurants> addCafeData() {
+//   List<Restaurants> cafeData = [];
+//   cafeData.add(Restaurants("Domesticated turkey", 4, food_ic_item2, "50 Reviews"));
+//   cafeData.add(Restaurants("Germen Chocolate Cake", 2, food_ic_item6, "50 Reviews"));
+//   cafeData.add(Restaurants("Tihar", 5, food_ic_item10, "50 Reviews"));
+//   cafeData.add(Restaurants("Cafe klatch", 5, food_ic_item1, "50 Reviews"));
+//
+//   return cafeData;
+// }
+//
+// List<DashboardCollections> addCuisineData() {
+//   List<DashboardCollections> cuisineData = [];
+//   cuisineData.add(DashboardCollections("Italian", food_ic_item6, "100+ Experience"));
+//   cuisineData.add(DashboardCollections("Goan", food_ic_item4, "50+ Experience"));
+//   cuisineData.add(DashboardCollections("Chines", food_ic_item11, "20+ Experience"));
+//   cuisineData.add(DashboardCollections("Indian", food_ic_item6, "100+ Experience"));
+//
+//   return cuisineData;
+// }
 
 List<ViewRestaurants> addViewRestaurantsData() {
   List<ViewRestaurants> viewData = [];

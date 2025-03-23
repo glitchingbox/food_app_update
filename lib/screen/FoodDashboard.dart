@@ -12,12 +12,15 @@ import 'package:food_app_prokit/screen/FoodProfile.dart';
 import 'package:food_app_prokit/screen/FoodSignIn.dart';
 import 'package:food_app_prokit/screen/FoodViewRestaurants.dart';
 import 'package:food_app_prokit/utils/FoodColors.dart';
-import 'package:food_app_prokit/utils/FoodDataGenerator.dart';
 import 'package:food_app_prokit/utils/FoodImages.dart';
 import 'package:food_app_prokit/utils/FoodString.dart';
 import 'package:food_app_prokit/utils/FoodWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
+import '../providers/dashbord_data_providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum CollectionProvider{inspiredByCollectionProvider,cuisineCollectionProvider}
+enum RestaurantsProvider{cakeIceCreamBakeryRestaurants, deliveryRestaurants,dineOutRestaurants,cafeRestaurants}
 class FoodDashboard extends StatefulWidget {
   static String tag = '/FoodDashboard';
   @override
@@ -26,21 +29,17 @@ class FoodDashboard extends StatefulWidget {
 
 class FoodDashboardState extends State<FoodDashboard> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  late List<DashboardCollections> mCollectionList;
-  late List<Restaurants> mBakeryList;
-  late List<Restaurants> mDeliveryList;
-  late List<Restaurants> mDineOutList;
-  late List<DashboardCollections> mExperienceList;
-  late List<Restaurants> mCafeList;
-  @override
-  void initState() {
-    super.initState();
-    mCollectionList = addCollectionData();
-    mBakeryList = addBakeryData();
-    mDeliveryList = addDeliveryRestaurantsData();
-    mDineOutList = addDineOutRestaurantsData();
-    mExperienceList = addCuisineData();
-    mCafeList = addCafeData();
+
+  IconButton iconButton(IconData iconData, Color color, Function onTapped){
+    return IconButton(
+      icon: Icon(
+       iconData,
+        color:color,
+      ),
+      onPressed: (){
+        onTapped();
+      },
+    );
   }
 
   @override
@@ -95,252 +94,82 @@ class FoodDashboardState extends State<FoodDashboard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: appStore.isDarkModeOn ? Colors.white : food_colorPrimary,
-                    ),
-                    onPressed: () {
-                      _scaffoldKey.currentState!.openDrawer();
-                    },
-                  ),
+                  iconButton( Icons.menu, appStore.isDarkModeOn ? Colors.white : food_colorPrimary, () {
+                    _scaffoldKey.currentState!.openDrawer();
+                  }) ,
+
                   Text(food_app_name,
                       style: boldTextStyle(
                           size: 18,
                           color: appStore.isDarkModeOn ? Colors.white : Colors.black,
                           weight: FontWeight.bold)),
-                  IconButton(
-                    icon: Icon(
-                      Icons.shopping_cart,
-                      color: appStore.isDarkModeOn ? Colors.white : food_colorPrimary,
-                    ),
-                    onPressed: () {
-                      FoodBookCart().launch(context);
-                    },
-                  ),
+
+                  iconButton( Icons.shopping_cart, appStore.isDarkModeOn ? Colors.white : food_colorPrimary, () {
+                    FoodBookCart().launch(context);
+                  },) ,
+
                 ],
               ),
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: defaultBoxShadow(),
-                        color: const Color.fromARGB(92, 252, 186, 101),
-                      ),
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        children: <Widget>[
-                          // mAddress(context, food_lbl_address_dashboard),
-                          mAddress(context,),
-                          SizedBox(height: 16),
-                          search(context,),
-                          SizedBox(height: 16),
-                          //........................Food Order...............
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: topGradient(
-                                  // food_colorPrimary,
-                                  // food_colorPrimaryDark,
-                                  food_colorPrimary,
-                                  const Color.fromARGB(158, 228, 87, 90),
-                                   food_cloche,
-                                  food_lbl_food_order,
-                                  food_lbl_find_near_by_restaurants,
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: defaultBoxShadow(),
+                    color: const Color.fromARGB(92, 252, 186, 101),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          children: <Widget>[
+                            // mAddress(context, food_lbl_address_dashboard),
+                            mAddress(context,),
+                            SizedBox(height: 16),
+                            search(context,),
+                            SizedBox(height: 16),
+                            //........................Food Order...............
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: topGradient(
+                                    // food_colorPrimary,
+                                    // food_colorPrimaryDark,
+                                    food_colorPrimary,
+                                    const Color.fromARGB(158, 228, 87, 90),
+                                     food_cloche,
+                                    food_lbl_food_order,
+                                    food_lbl_find_near_by_restaurants,
+                                  ),
+                                  flex: 1,
                                 ),
-                                flex: 1,
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: topGradient(
-                                  food_colorPrimary,
-                                  const Color.fromARGB(158, 228, 87, 90),
-                                  food_ic_table,
-                                  food_lbl_book_a_table,
-                                  food_lbl_may_take_upto_3_mins,
-                                ),
-                                flex: 1,
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 0),
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: defaultBoxShadow(),
-                        color: const Color.fromARGB(92, 252, 186, 101),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          heading(
-                            food_lbl_get_inspired_by_collections,
-                          ),
-                          SizedBox(
-                            height: 250,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: mCollectionList.length,
-                              padding: EdgeInsets.only(right: 16),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Collection(mCollectionList[index], index);
-                              },
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: topGradient(
+                                    food_colorPrimary,
+                                    const Color.fromARGB(158, 228, 87, 90),
+                                    food_ic_table,
+                                    food_lbl_book_a_table,
+                                    food_lbl_may_take_upto_3_mins,
+                                  ),
+                                  flex: 1,
+                                )
+                              ],
                             ),
-                          ),
-                          SizedBox(height: 0),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 0),
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: defaultBoxShadow(),
-                        color: const Color.fromARGB(92, 252, 186, 101),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          heading(food_lbl_cake_ice_cream_and_bakery),
-                          SizedBox(
-                            height: 250,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: mBakeryList.length,
-                              padding: EdgeInsets.only(bottom: 4, right: 16),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Item(mBakeryList[index], index);
-                              },
-                            ),
-                          ),
-                          mViewAll(
-                            context,
-                            food_lbl_view_all_restaurants,
-                            onTap: () {
-                              FoodViewRestaurants().launch(context);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 0),
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: defaultBoxShadow(),
-                        color: const Color.fromARGB(92, 252, 186, 101),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          heading(food_lbl_delivery_restaurants),
-                          SizedBox(
-                            height: 250,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(bottom: 4, right: 16),
-                              itemCount: mDeliveryList.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Item(mDeliveryList[index], index);
-                              },
-                            ),
-                          ),
-                          mViewAll(context, food_lbl_view_all_restaurants, onTap: () {
-                            FoodViewRestaurants().launch(context);
-                          }),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 0),
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: defaultBoxShadow(),
-                        color: const Color.fromARGB(92, 252, 186, 101),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          heading(food_lbl_dine_out_restaurants),
-                          SizedBox(
-                            height: 250,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: mDineOutList.length,
-                              padding: EdgeInsets.only(bottom: 4, right: 16),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Item(mDineOutList[index], index);
-                              },
-                            ),
-                          ),
-                          mViewAll(context, food_lbl_view_all_restaurants, onTap: () {
-                            FoodViewRestaurants().launch(context);
-                          }),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 0),
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: defaultBoxShadow(),
-                        color: const Color.fromARGB(92, 252, 186, 101),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          heading(food_lbl_experience_your_favourite_cuisine),
-                          SizedBox(
-                            height: 250,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(right: 16),
-                              itemCount: mExperienceList.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Collection(mExperienceList[index], index);
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 16),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 0),
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: defaultBoxShadow(),
-                        color: const Color.fromARGB(92, 252, 186, 101),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          heading(food_lbl_cafe),
-                          SizedBox(
-                            height: 250,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(bottom: 4, right: 16),
-                              itemCount: mCafeList.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Item(mCafeList[index], index);
-                              },
-                            ),
-                          ),
-                          mViewAll(context, food_lbl_view_all_restaurants, onTap: () {
-                            FoodViewRestaurants().launch(context);
-                          }),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 0),
-                  ],
+
+                Collection(headingString: food_lbl_get_inspired_by_collections,whichCollectionProviderToWatch: CollectionProvider.inspiredByCollectionProvider, ),
+                Item(whichRestaurantsProviderToWatch: RestaurantsProvider.cakeIceCreamBakeryRestaurants, headingString: food_lbl_cake_ice_cream_and_bakery,),
+                Item(whichRestaurantsProviderToWatch: RestaurantsProvider.deliveryRestaurants,headingString:food_lbl_delivery_restaurants ,),
+                Item(whichRestaurantsProviderToWatch: RestaurantsProvider.dineOutRestaurants, headingString: food_lbl_dine_out_restaurants,),
+                Collection( headingString:food_lbl_experience_your_favourite_cuisine ,whichCollectionProviderToWatch: CollectionProvider.cuisineCollectionProvider, ),
+                Item(whichRestaurantsProviderToWatch: RestaurantsProvider.cafeRestaurants,headingString:food_lbl_cafe)
+                    ],
+                  ),
                 ),
               ),
             )
@@ -353,134 +182,203 @@ class FoodDashboardState extends State<FoodDashboard> {
 }
 
 // ignore: must_be_immutable
-class Item extends StatelessWidget {
-  late Restaurants model;
+class Item extends ConsumerWidget {
 
-  Item(Restaurants model, int pos) {
-    this.model = model;
-  }
+  late List<Restaurants> restaurantsList;
+  late RestaurantsProvider whichRestaurantsProviderToWatch;
+  late String headingString;
 
+
+  Item({required this.whichRestaurantsProviderToWatch, required this.headingString, });
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var width = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: () {
-        FoodDescription().launch(context);
-      },
-      child: Container(
-        width: width * 0.4,
-        margin: EdgeInsets.only(left: 16),
-        decoration:
-            BoxDecoration(boxShadow: defaultBoxShadow(), color: appStore.isDarkModeOn ? scaffoldDarkColor : white),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-              child: Stack(
-                children: <Widget>[
-                  CachedNetworkImage(
-                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
-                    imageUrl: model.image,
-                    height: width * 0.3,
-                    width: width * 0.4,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                    alignment: Alignment.topRight,
-                    padding: EdgeInsets.all(4),
-                    child: Icon(Icons.favorite_border, color: food_white, size: 18),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(model.name, style: primaryTextStyle(), maxLines: 2),
-                  4.height,
-                  Row(
-                    children: <Widget>[
-                      mRating(model.rating.toString()),
-                      Text(
-                        model.review,
-                        style: primaryTextStyle(color: food_textColorSecondary, size: 14),
+if(whichRestaurantsProviderToWatch==RestaurantsProvider.cakeIceCreamBakeryRestaurants)
+  {
+   restaurantsList= ref.watch(bakeryRestaurantsProvider);
+  }
+else if(whichRestaurantsProviderToWatch==RestaurantsProvider.deliveryRestaurants){
+  restaurantsList= ref.watch(deliveryRestaurantsProvider);
+}
+else if(whichRestaurantsProviderToWatch==RestaurantsProvider.dineOutRestaurants){
+  restaurantsList= ref.watch(dineOutRestaurantsProvider);
+}
+else {
+  restaurantsList= ref.watch(cafeRestaurantsProvider);
+}
+
+   return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        heading(headingString),
+        SizedBox(
+          height: 250,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: restaurantsList.length,
+            padding: EdgeInsets.only(bottom: 4, right: 16),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+              onTap: () {
+                FoodDescription().launch(context);
+              },
+              child: Container(
+                width: width * 0.4,
+                margin: EdgeInsets.only(left: 16),
+                decoration:
+                BoxDecoration(boxShadow: defaultBoxShadow(), color: appStore.isDarkModeOn ? scaffoldDarkColor : white),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+                      child: Stack(
+                        children: <Widget>[
+                          CachedNetworkImage(
+                            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+                            imageUrl:restaurantsList[index].image,
+                            height: width * 0.3,
+                            width: width * 0.4,
+                            fit: BoxFit.cover,
+                          ),
+                          Container(
+                            alignment: Alignment.topRight,
+                            padding: EdgeInsets.all(4),
+                            child: Icon(Icons.favorite_border, color: food_white, size: 18),
+                          )
+                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(restaurantsList[index].name, style: primaryTextStyle(), maxLines: 2),
+                          4.height,
+                          Row(
+                            children: <Widget>[
+                              mRating(restaurantsList[index].rating.toString()),
+                              Text(
+                                restaurantsList[index].review,
+                                style: primaryTextStyle(color: food_textColorSecondary, size: 14),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            )
-          ],
+              );
+            },
+          ),
         ),
-      ),
+        mViewAll(
+          context,
+          food_lbl_view_all_restaurants,
+          onTap: () {
+            FoodViewRestaurants().launch(context);
+          },
+        ),
+      ],
     );
+
   }
 }
 
 // ignore: must_be_immutable
 
 // ignore: must_be_immutable
-class Collection extends StatelessWidget {
-  late DashboardCollections model;
+class Collection extends ConsumerWidget {
 
-  Collection(DashboardCollections model, int pos) {
-    this.model = model;
-  }
+  late List<DashboardCollections> collectionList;
+  late String headingString;
+  late CollectionProvider whichCollectionProviderToWatch;
+
+  Collection({required this.headingString, required this.whichCollectionProviderToWatch});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var width = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: () {
-        FoodViewRestaurants().launch(context);
-      },
-      child: Container(
-        margin: EdgeInsets.only(left: 16),
-        child: Stack(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              child: CachedNetworkImage(
-                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
-                imageUrl: model.image,
-                width: width * 0.5,
-                height: 250,
-                fit: BoxFit.fill,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.171),
-                    blurRadius: 15,
-                    spreadRadius: 0,
-                    offset: Offset(
-                      0,
-                      5,
-                    ),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(model.name, style: primaryTextStyle(size: 20, fontFamily: 'Andina', color: white)),
-                  SizedBox(height: 4),
-                  Text(model.info, style: primaryTextStyle(size: 14, color: food_white)),
-                ],
-              ),
-            ),
-          ],
+    if(whichCollectionProviderToWatch==CollectionProvider.inspiredByCollectionProvider)
+      {
+      collectionList= ref.watch(inspiredByCollectionsProvider);
+      }
+    else{
+      collectionList=ref.watch(cuisineCollectionProvider);
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        heading(
+         headingString,
         ),
-      ),
+        SizedBox(
+          height: 250,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: collectionList.length,
+            padding: EdgeInsets.only(right: 16),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  FoodViewRestaurants().launch(context);
+                },
+                child: Container(
+                  margin: EdgeInsets.only(left: 16),
+                  child: Stack(
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        child: CachedNetworkImage(
+                          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+                          imageUrl: collectionList[index].image,
+                          width: width * 0.5,
+                          height: 250,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromRGBO(0, 0, 0, 0.171),
+                              blurRadius: 15,
+                              spreadRadius: 0,
+                              offset: Offset(
+                                0,
+                                5,
+                              ),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text( collectionList[index].name, style: primaryTextStyle(size: 20, fontFamily: 'Andina', color: white)),
+                            SizedBox(height: 4),
+                            Text( collectionList[index].info, style: primaryTextStyle(size: 14, color: food_white)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
+
   }
 }
 
